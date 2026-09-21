@@ -28,7 +28,7 @@
     "postinstall": "electron-builder install-app-deps",
     "ng": "ng",
     "start": "concurrently \"npm:electron:serve\" \"npm:ng:serve\"",
-    "ng:serve": "ng serve -c dev -o",
+    "ng:serve": "ng serve -c dev -o --port 50000",
     "build": "npm run electron:serve-tsc && ng build --base-href ./",
     "web:dev": "npm run build",
     "web:prod": "npm run build -- -c production",

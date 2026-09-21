@@ -1,0 +1,29 @@
+<div class="app-layout">
+    <header class="sidebar-header">
+        <div class="sidebar-header">
+            <img src="assets/icons/logo.svg" alt="Центр управления" class="logo" />
+            <span class="app-title">Центр управления</span>
+        </div>
+        <nav class="main-nav">
+            <ul class="top-tabs">
+                <li class="tab-item active">Информация</li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <app-tree-view (selectedObject)="onObjectSelected($event)" />
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        @if (selectedObject()) {
+        <app-properties-panel [selectedObject]="selectedObject()" />
+        } @else {
+        <div class="empty-state">
+            <p>Выберите объект в дереве для просмотра свойств</p>
+        </div>
+        }
+    </main>
+</div>

@@ -1,0 +1,114 @@
+:host {
+    display: block;
+    width: 100%;
+    color: var(--text-main);
+    font-size: 14px;
+}
+
+.tree-container {
+    padding: 8px;
+    background-color: var(--panel-bg);
+}
+
+.tree-root,
+.tree-children {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+/* Сдвиг для вложенных элементов */
+.tree-children {
+    padding-left: 24px;
+}
+
+.tree-node {
+    margin: 1px 0;
+}
+
+/* Обертка контента строки */
+.node-content {
+    display: flex;
+    align-items: center;
+    padding: 6px 12px;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: background-color 0.15s ease;
+    user-select: none;
+}
+
+/* Отступ слева для конечных файлов, у которых нет стрелочки */
+.node-content.target-file {
+    padding-left: 36px;
+}
+
+/* Эффект наведения */
+.node-content:hover {
+    background-color: var(--item-bg-hovered);
+}
+
+/* Активный/выделенный элемент */
+.node-content.active {
+    background-color: var(--active-item-bg);
+    color: var(--accent);
+}
+
+.node-content.active .node-icon svg {
+    fill: var(--accent);
+}
+
+/* Стили иконок */
+.toggle-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    margin-right: 4px;
+    border-radius: 4px;
+    border-radius: 50%;
+    transition: background-color 0.2s ease;
+    cursor: pointer;
+}
+
+/* Эффект hover при наведении именно на саму иконку-шеврон */
+.toggle-icon:hover {
+    background-color: rgba(0, 0, 0, 0.06);
+    /* Мягкое затемнение */
+}
+
+/* Изменяем цвет стрелочки при наведении для лучшего отклика */
+.toggle-icon:hover svg {
+    fill: var(--text-hovered);
+}
+
+.toggle-icon svg {
+    fill: var(--icon);
+    transform: rotate(0deg);
+    /* По умолчанию шеврон смотрит вправо */
+    transition: transform 0.2s ease, fill 0.2s ease;
+}
+
+/* Если узел открыт — разворачиваем стрелку вниз */
+.toggle-icon svg.rotated {
+    transform: rotate(90deg);
+}
+
+.node-icon {
+    display: flex;
+    align-items: center;
+    margin-right: 8px;
+}
+
+.node-icon svg {
+    fill: var(--icon);
+    /* Серый цвет иконок по умолчанию */
+}
+
+/* Текст узла */
+.node-label {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 20px;
+}

@@ -8,11 +8,11 @@ import { AppComponent } from './app/app.component';
 import { APP_CONFIG } from './environments/environment';
 import { CoreModule } from './app/core/core.module';
 import { SharedModule } from './app/shared/shared.module';
-import {provideTranslateService} from '@ngx-translate/core';
-import {provideTranslateHttpLoader} from '@ngx-translate/http-loader';
+import { provideTranslateService } from '@ngx-translate/core';
+import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
 import { PageNotFoundComponent } from './app/shared/components';
-import { HomeComponent } from './app/home/home.component';
 import { DetailComponent } from './app/detail/detail.component';
+import { LayoutComponent } from './app/layout/components/layout/layout.component';
 
 if (APP_CONFIG.production) {
   enableProdMode();
@@ -20,7 +20,7 @@ if (APP_CONFIG.production) {
 
 bootstrapApplication(AppComponent, {
   providers: [
-    provideZoneChangeDetection(),provideHttpClient(withInterceptorsFromDi()),
+    provideZoneChangeDetection(), provideHttpClient(withInterceptorsFromDi()),
     provideTranslateService({
       loader: provideTranslateHttpLoader({
         prefix: './assets/i18n/',
@@ -37,7 +37,7 @@ bootstrapApplication(AppComponent, {
       },
       {
         path: 'home',
-        component: HomeComponent
+        component: LayoutComponent
       },
       {
         path: 'detail',

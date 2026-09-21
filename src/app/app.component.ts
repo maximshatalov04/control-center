@@ -1,14 +1,15 @@
 import { Component, inject } from '@angular/core';
 import { ElectronService } from './core/services';
 import { APP_CONFIG } from '../environments/environment';
+import { LayoutComponent } from './layout/components/layout/layout.component';
 import { RouterOutlet } from '@angular/router';
 
 @Component({
-    selector: 'app-root',
-    templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss'],
-    standalone: true,
-    imports: [RouterOutlet]
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss'],
+  standalone: true,
+  imports: [RouterOutlet]
 })
 export class AppComponent {
   private electronService = inject(ElectronService);

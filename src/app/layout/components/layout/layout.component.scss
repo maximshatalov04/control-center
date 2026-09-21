@@ -1,0 +1,113 @@
+/* Общий контейнер приложения */
+.app-layout {
+    display: grid;
+    grid-template-rows: 60px 1fr;
+    /* Фиксированная высота шапки */
+    grid-template-columns: 360px 1fr;
+    /* Ширина бокового дерева */
+    height: 100vh;
+    width: 100vw;
+}
+
+/* Шапка приложения */
+.sidebar-header {
+    grid-column: 1 / -1;
+    /* Растягиваем на всю ширину */
+    background-color: var(--primary-bg);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    justify-content: flex-start;
+}
+
+/* Группировка логотипа и названия */
+div.sidebar-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-right: 24px;
+}
+
+.logo {
+    height: 40px;
+    width: auto;
+    filter: brightness(0) invert(1);
+    /* Делает svg-иконку белой под цвет темы */
+}
+
+.app-title {
+    font-weight: 600;
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+/* Навигация (вкладки в шапке) */
+.main-nav {
+    height: 100%;
+    display: flex;
+}
+
+.top-tabs {
+    display: flex;
+    list-style: none;
+    height: 100%;
+}
+
+.tab-item {
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: background-color 0.2s;
+    height: 100%;
+}
+
+.tab-item:hover {
+    background-color: var(--primary-bg-hover);
+}
+
+.tab-item.active {
+    background-color: var(--primary-bg-hover);
+    font-weight: 600;
+    box-shadow: inset 0 -2px 0 0 var(--panel-bg);
+    /* Белая линия снизу активного таба */
+}
+
+/* Боковая панель (Дерево объектов) */
+.sidebar {
+    grid-column: 1;
+    background-color: var(--panel-bg);
+    border-right: 1px solid var(--sidebar-border);
+    padding: 8px;
+    overflow-y: auto;
+}
+
+/* Основной контент (Правая часть со свойствами) */
+.main-content {
+    grid-column: 2;
+    background-color: var(--window-bg);
+    padding: 12px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Состояние, когда объект не выбран */
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    color: var(--text-muted);
+    border: 2px dashed var(--sidebar-border);
+    border-radius: 6px;
+    background-color: var(--panel-bg);
+    margin: 4px;
+}
+
+.empty-state p {
+    font-size: 14px;
+}
