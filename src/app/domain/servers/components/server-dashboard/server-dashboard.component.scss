@@ -1,0 +1,216 @@
+.server-dashboard {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.panel {
+    background: var(--panel-bg);
+    border: 1px solid var(--border, #e0e0e0);
+    border-radius: 6px;
+    padding: 16px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.panel-title {
+    margin: 0 0 16px 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-main, #222);
+}
+
+/* Основная информация: сетка */
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 12px;
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.info-label {
+    font-size: 12px;
+    color: var(--text-muted, #666);
+    margin-bottom: 4px;
+}
+
+.info-value {
+    font-size: 14px;
+    color: var(--text-main, #333);
+}
+
+.info-value--multiline {
+    white-space: pre-wrap;
+    line-height: 1.4;
+}
+
+/* Карточки БД */
+.db-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 12px;
+}
+
+.card {
+    border: 1px solid var(--border, #e0e0e0);
+    border-radius: 6px;
+    padding: 12px;
+    background: var(--panel-bg);
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.badge-status {
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    width: fit-content;
+}
+
+.badge-green {
+    background: var(--badge-green-bg, #d4edda);
+    color: var(--badge-green, #155724);
+}
+
+.badge-yellow {
+    background: var(--badge-yellow-bg, #fff3cd);
+    color: var(--badge-yellow, #856404);
+}
+
+.badge-red {
+    background: var(--badge-red-bg, #f8d7da);
+    color: var(--badge-red, #721c24);
+}
+
+.card-body-list {
+    list-style: none;
+    padding: 0;
+    margin: 8px 0 12px 0;
+}
+
+.card-body-list li {
+    display: flex;
+    justify-content: space-between;
+    padding: 4px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.card-body-list li:last-child {
+    border-bottom: none;
+}
+
+.card-body-list .label {
+    color: var(--text-muted, #666);
+    font-size: 12px;
+}
+
+.card-footer {
+    text-align: right;
+}
+
+.btn,
+.btn-sm {
+    padding: 6px 12px;
+    border: 1px solid var(--border, #ccc);
+    background: transparent;
+    color: var(--text-main, #333);
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.btn-outline {
+    border-color: var(--primary, #00887d);
+    color: var(--primary, #00887d);
+}
+
+.btn-outline:hover {
+    background: var(--primary, #00887d);
+    color: var(--panel-bg, #fff);
+}
+
+.empty-state {
+    color: var(--text-muted, #999);
+    text-align: center;
+    padding: 24px;
+}
+
+/* Метрики */
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+}
+
+.metric-card {
+    position: relative;
+    background: var(--metric-card-bg, #f9f9f9);
+    padding: 12px;
+    border-radius: 6px;
+    text-align: center;
+}
+
+.metric-header {
+    font-size: 13px;
+    color: var(--text-muted, #666);
+    margin-bottom: 8px;
+}
+
+.status-badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 13px;
+    display: inline-block;
+}
+
+.status-green {
+    background: var(--badge-green-bg, #d4edda);
+    color: var(--badge-green, #155724);
+}
+
+.status-yellow {
+    background: var(--badge-yellow-bg, #fff3cd);
+    color: var(--badge-yellow, #856404);
+}
+
+.status-red {
+    background: var(--badge-red-bg, #f8d7da);
+    color: var(--badge-red, #721c24);
+}
+
+.progress-container {
+    position: relative;
+    height: 8px;
+    background: var(--progress-container-bg, #e0e0e0);
+    border-radius: 4px;
+}
+
+.progress-bar {
+    height: 100%;
+    background: var(--primary, #00887d);
+    transition: width 0.3s ease;
+}
+
+.progress-label {
+    position: absolute;
+    right: 0px;
+    top: -28px;
+    font-size: 12px;
+    color: var(--primary, #00887d);
+    white-space: nowrap;
+    background: var(--panel-bg);
+    padding: 2px 6px;
+    border-radius: 4px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}

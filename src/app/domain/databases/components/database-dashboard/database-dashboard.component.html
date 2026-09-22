@@ -1,0 +1,228 @@
+<div class="database-dashboard">
+    <!-- Верхняя панель: основная информация о БД -->
+    <section class="panel">
+        <h3 class="panel-title">Основная информация</h3>
+        <div class="info-grid">
+            <div class="info-item">
+                <span class="info-label">Идентификатор</span>
+                <span class="info-value">{{ database()?.id }}</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Наименование</span>
+                <span class="info-value">{{ database()?.name }}</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Сервер приложений</span>
+                @if (database()?.serverName) {
+                <a class="info-value info-link" (click)="navigateToServer(database()!.serverId!)">
+                    {{ database()?.serverName }}
+                </a>
+                } @else {
+                <span class="info-value">—</span>
+                }
+            </div>
+            <div class="info-item">
+                <span class="info-label">Тип СУБД</span>
+                <span class="info-value">{{ database()?.dbType }}</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Версия СУБД</span>
+                <span class="info-value">{{ database()?.version }}</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Кодировка</span>
+                <span class="info-value">{{ database()?.encoding }}</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Размер БД</span>
+                <span class="info-value">{{ formatSize(database()?.sizeBytes ?? 0) }}</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Размер журнала транзакций</span>
+                <span class="info-value">{{ formatSize(database()?.logSizeBytes ?? 0) }}</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Статус</span>
+                @if (database()?.status) {
+                <span class="badge-status badge-{{ getDatabaseStatusColor(database()!.status) }}">
+                    {{ database()?.status }}
+                </span>
+                } @else {
+                <span class="badge-status badge-red">Неизвестно</span>
+                }
+            </div>
+            <div class="info-item">
+                <span class="info-label">Дата последнего бэкапа</span>
+                <span class="info-value">
+                    {{ database()?.lastBackupAt ? (database()!.lastBackupAt | date:'dd.MM.yyyy HH:mm') : 'Нет данных' }}
+                </span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Количество файловых архивов</span>
+                <span class="info-value">{{ database()?.archives?.length || 0 }}</span>
+            </div>
+            <div class="info-item info-item--full">
+                <span class="info-label">Описание</span>
+                <span class="info-value info-value--multiline">
+                    {{ database()?.description || 'Не указано' }}
+                </span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Средняя панель: список файловых архивов (мини-карточки) -->
+    <section class="panel">
+        <h3 class="panel-title">Файловые архивы ({{ database()?.archives?.length || 0 }})</h3>
+        @if (database()?.archives && database()?.archives?.length) {
+        <div class="archive-cards-grid">
+            @for (archive of database()?.archives; track archive.id) {
+            <div class="card card-archive">
+                <div class="card-header">
+                    <span class="badge-status badge-{{ getArchiveStatusColor(archive.status) }}">
+                        {{ archive.status }}
+                    </span>
+                    <strong>{{ archive.name }}</strong>
+                </div>
+                <ul class="card-body-list">
+                    <li>
+                        <span class="label">Идентификатор</span>
+                        <span>{{ archive.id }}</span>
+                    </li>
+                    <li>
+                        <span class="label">База данных</span>
+                        <span>{{ database()?.name }}</span>
+                    </li>
+                    <li>
+                        <span class="label">Путь к хранилищу</span>
+                        <span class="archive-path" title="{{ archive.path }}">{{ archive.path }}</span>
+                    </li>
+                    <li>
+                        <span class="label">Объём хранилища</span>
+                        <span>{{ formatSize(archive.maxCapacityBytes) }}</span>
+                    </li>
+                    <li>
+                        <span class="label">Занятый объём</span>
+                        <span>{{ formatSize(archive.usedBytes) }}</span>
+                    </li>
+                    <li>
+                        <span class="label">Количество файлов</span>
+                        <span>{{ archive.fileCount }}</span>
+                    </li>
+                    <li>
+                        <span class="label">Дата последнего изменения</span>
+                        <span>
+                            {{ archive.lastModifiedAt ? (archive.lastModifiedAt | date:'dd.MM.yyyy HH:mm') : 'Нет
+                            данных' }}
+                        </span>
+                    </li>
+                    <li>
+                        <span class="label">Политика хранения</span>
+                        <span>{{ archive.retentionPolicy }}</span>
+                    </li>
+                </ul>
+
+                @let percent = getUsagePercent(archive.maxCapacityBytes, archive.usedBytes);
+
+                <!-- Прогресс-бар заполненности -->
+                <div class="archive-usage">
+                    <span class="archive-usage-label">Заполнено: {{ percent }}%</span>
+                    <div class="progress-container">
+                        <div class="progress-bar" [style.width.%]="percent"></div>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <span class="info-label">Описание архива</span>
+                    <span class="info-value">{{ archive.description || 'Без описания' }}</span>
+                </div>
+
+                <div class="card-footer">
+                    <button class="btn btn-sm btn-outline" (click)="openArchiveDetails(archive)">
+                        Подробнее
+                    </button>
+                </div>
+            </div>
+            }
+        </div>
+        } @else {
+        <p class="empty-state">Нет привязанных файловых архивов</p>
+        }
+    </section>
+
+    <!-- Нижняя панель: расширенный список БД с архивами -->
+    <section class="panel">
+        <h3 class="panel-title">Базы данных на сервере ({{ databases()?.length }})</h3>
+        @if (databases()?.length) {
+        <div class="db-extended-list">
+            @for (db of databases(); track db.id) {
+            <div class="card card-db-extended" [class.card-db-extended--active]="db.id === databaseId()">
+                <div class="card-header">
+                    <span class="badge-status badge-{{ getDatabaseStatusColor(db.status) }}">
+                        {{ db.status }}
+                    </span>
+                    <strong>{{ db.name }}</strong>
+                </div>
+                <ul class="card-body-list">
+                    <li>
+                        <span class="label">Тип СУБД</span>
+                        <span>{{ db.dbType }}</span>
+                    </li>
+                    <li>
+                        <span class="label">Версия</span>
+                        <span>{{ db.version }}</span>
+                    </li>
+                    <li>
+                        <span class="label">Размер БД</span>
+                        <span>{{ formatSize(db.sizeBytes) }}</span>
+                    </li>
+                    <li>
+                        <span class="label">Журнал транзакций</span>
+                        <span>{{ formatSize(db.logSizeBytes) }}</span>
+                    </li>
+                    <li>
+                        <span class="label">Архивов</span>
+                        <span>{{ db.archives?.length || 0 }}</span>
+                    </li>
+                    <li>
+                        <span class="label">Дата бэкапа</span>
+                        <span>
+                            {{ db.lastBackupAt ? (db.lastBackupAt | date:'dd.MM.yyyy HH:mm') : 'Нет данных' }}
+                        </span>
+                    </li>
+                </ul>
+
+                @if (db.archives && db.archives.length) {
+                <div class="archive-sublist">
+                    <div class="archive-sublist-title">Файловые архивы ({{ db.archives.length }}):</div>
+                    <ul class="archive-sublist-items">
+                        @for (arch of db.archives; track arch.id) {
+                        <li (click)="openArchiveDetails(arch)">
+                            <!-- Левая колонка: Название и Статус под ним -->
+                            <div class="archive-info-block">
+                                <span class="archive-sublist-name">{{ arch.name }}</span>
+                                <span class="badge-status badge-{{ getArchiveStatusColor(arch.status) }} badge--sm">
+                                    {{ arch.status }}
+                                </span>
+                            </div>
+
+                            <!-- Правая колонка: Объём и Количество файлов под ним -->
+                            <div class="archive-meta-block">
+                                <span class="archive-size">{{ formatSize(arch.usedBytes) }} / {{
+                                    formatSize(arch.maxCapacityBytes) }}</span>
+                                <span class="archive-files-count">{{ arch.fileCount }} файл(ов)</span>
+                            </div>
+                        </li>
+                        }
+                    </ul>
+                </div>
+                } @else {
+                <div class="archive-sublist archive-sublist--empty">Архивов нет</div>
+                }
+            </div>
+            }
+        </div>
+        } @else {
+        <p class="empty-state">Нет баз данных</p>
+        }
+    </section>
+</div>

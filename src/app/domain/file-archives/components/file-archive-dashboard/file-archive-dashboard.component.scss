@@ -1,0 +1,285 @@
+/* ===== Переиспользованные стили из DatabaseDashboard / ServerDashboard ===== */
+
+.file-archive-dashboard {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.panel {
+    background: var(--panel-bg, #fff);
+    border: 1px solid var(--border, #e0e0e0);
+    border-radius: 6px;
+    padding: 16px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.panel-title {
+    margin: 0 0 16px 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-main, #222);
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 12px;
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.info-label {
+    font-size: 12px;
+    color: var(--text-muted, #666);
+    margin-bottom: 4px;
+}
+
+.info-value {
+    font-size: 14px;
+    color: var(--text-main, #333);
+}
+
+.info-value--multiline {
+    white-space: pre-wrap;
+    line-height: 1.4;
+}
+
+.info-link {
+    color: var(--primary, #00887d);
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.badge-status {
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    width: fit-content;
+}
+
+.badge-green {
+    background: var(--badge-green-bg, #d4edda);
+    color: var(--badge-green, #155724);
+}
+
+.badge-yellow {
+    background: var(--badge-yellow-bg, #fff3cd);
+    color: var(--badge-yellow, #856404);
+}
+
+.badge-red {
+    background: var(--badge-red-bg, #f8d7da);
+    color: var(--badge-red, #721c24);
+}
+
+.card {
+    border: 1px solid var(--border, #e0e0e0);
+    border-radius: 6px;
+    padding: 12px;
+    background: var(--panel-bg, #fff);
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.card-body-list {
+    list-style: none;
+    padding: 0;
+    margin: 8px 0 12px 0;
+
+    li {
+        display: flex;
+        justify-content: space-between;
+        padding: 4px 0;
+        border-bottom: 1px solid var(--border, #f0f0f0);
+
+        &:last-child {
+            border-bottom: none;
+        }
+    }
+
+    .label {
+        color: var(--text-muted, #666);
+        font-size: 12px;
+    }
+}
+
+.card-footer {
+    text-align: right;
+    margin-top: auto;
+    padding-top: 10px;
+}
+
+.btn,
+.btn-sm {
+    padding: 6px 12px;
+    border: 1px solid var(--border, #ccc);
+    background: transparent;
+    color: var(--text-main, #333);
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.btn-outline {
+    border-color: var(--primary, #00887d);
+    color: var(--primary, #00887d);
+
+    &:hover {
+        background: var(--primary, #00887d);
+        color: var(--panel-bg, #fff);
+    }
+}
+
+.empty-state {
+    color: var(--text-muted, #999);
+    text-align: center;
+    padding: 24px;
+}
+
+.progress-container {
+    position: relative;
+    height: 8px;
+    background: var(--progress-container-bg, #e0e0e0);
+    border-radius: 4px;
+}
+
+.progress-bar {
+    height: 100%;
+    background: var(--primary, #00887d);
+    transition: width 0.3s ease;
+}
+
+.archive-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 12px;
+}
+
+.card-archive {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.archive-path {
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    color: var(--text-muted, #555);
+    max-width: 180px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: right;
+}
+
+.archive-usage {
+    margin-bottom: 10px;
+}
+
+.archive-usage-label {
+    display: block;
+    font-size: 11px;
+    color: var(--text-muted, #666);
+    margin-bottom: 4px;
+}
+
+.metric-card {
+    position: relative;
+    background: var(--metric-card-bg, #f9f9f9);
+    padding: 12px;
+    border-radius: 6px;
+    text-align: center;
+}
+
+.metric-header {
+    font-size: 13px;
+    color: var(--text-muted, #666);
+    margin-bottom: 8px;
+}
+
+/* ===== Новые стили, специфичные для FileArchiveDashboard ===== */
+
+.info-item--full {
+    grid-column: 1 / -1;
+}
+
+.archive-path-value {
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    word-break: break-all;
+    line-height: 1.4;
+}
+
+/* Сетка заполненности хранилища */
+.archive-usage-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 12px;
+}
+
+.archive-usage-card {
+    background: var(--metric-card-bg, #f9f9f9);
+    padding: 14px;
+    border-radius: 6px;
+}
+
+.archive-usage-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.archive-usage-title {
+    font-size: 13px;
+    color: var(--text-muted, #666);
+}
+
+.archive-usage-percent {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--primary, #00887d);
+}
+
+.archive-usage-detail {
+    margin-top: 8px;
+    font-size: 12px;
+    color: var(--text-muted, #666);
+    text-align: right;
+}
+
+/* Увеличенный прогресс-бар для главной панели */
+.progress-container--lg {
+    height: 14px;
+    border-radius: 7px;
+}
+
+.info-value--lg {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-main, #222);
+}
+
+/* Подсветка текущего архива в списке других архивов */
+.card-archive--active {
+    border-color: var(--primary, #00887d);
+    box-shadow: 0 0 0 2px rgba(0, 136, 125, 0.15);
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .archive-usage-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}

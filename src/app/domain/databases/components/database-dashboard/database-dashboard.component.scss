@@ -1,0 +1,282 @@
+/* ===== Переиспользованные стили (полностью совпадают с ServerDashboard) ===== */
+.database-dashboard {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.panel {
+    background: var(--panel-bg, #fff);
+    border: 1px solid var(--border, #e0e0e0);
+    border-radius: 6px;
+    padding: 16px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.panel-title {
+    margin: 0 0 16px 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-main, #222);
+}
+
+/* Основная информация: сетка */
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 12px;
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.info-label {
+    font-size: 12px;
+    color: var(--text-muted, #666);
+    margin-bottom: 4px;
+}
+
+.info-value {
+    font-size: 14px;
+    color: var(--text-main, #333);
+}
+
+/* Карточки */
+.card {
+    border: 1px solid var(--border, #e0e0e0);
+    border-radius: 6px;
+    padding: 12px;
+    background: var(--panel-bg, #fff);
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+/* Бейджи статусов */
+.badge-status {
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    width: fit-content;
+}
+
+.badge-green {
+    background: var(--badge-green-bg, #d4edda);
+    color: var(--badge-green, #155724);
+}
+
+.badge-yellow {
+    background: var(--badge-yellow-bg, #fff3cd);
+    color: var(--badge-yellow, #856404);
+}
+
+.badge-red {
+    background: var(--badge-red-bg, #f8d7da);
+    color: var(--badge-red, #721c24);
+}
+
+/* Список свойств внутри карточки */
+.card-body-list {
+    list-style: none;
+    padding: 0;
+    margin: 8px 0 12px 0;
+
+    li {
+        display: flex;
+        justify-content: space-between;
+        padding: 4px 0;
+        border-bottom: 1px solid var(--border, #f0f0f0);
+
+        &:last-child {
+            border-bottom: none;
+        }
+    }
+
+    .label {
+        color: var(--text-muted, #666);
+        font-size: 12px;
+    }
+}
+
+/* Кнопки */
+.card-footer {
+    text-align: right;
+    margin-top: auto;
+    padding-top: 10px;
+}
+
+.btn,
+.btn-sm {
+    padding: 6px 12px;
+    border: 1px solid var(--border, #ccc);
+    background: transparent;
+    color: var(--text-main, #333);
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.btn-outline {
+    border-color: var(--primary, #00887d);
+    color: var(--primary, #00887d);
+
+    &:hover {
+        background: var(--primary, #00887d);
+        color: var(--panel-bg, #fff);
+    }
+}
+
+/* Пустое состояние */
+.empty-state {
+    color: var(--text-muted, #999);
+    text-align: center;
+    padding: 24px;
+}
+
+.progress-container {
+    position: relative;
+    height: 8px;
+    background: var(--progress-container-bg, #e0e0e0);
+    border-radius: 4px;
+}
+
+.progress-bar {
+    height: 100%;
+    background: var(--primary, #00887d);
+    transition: width 0.3s ease;
+}
+
+/* ===== Новые стили, специфичные для DatabaseDashboard ===== */
+
+/* Сетка карточек архивов */
+.archive-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 12px;
+}
+
+.card-archive {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.archive-path {
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    color: var(--text-muted, #555);
+    max-width: 180px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: right;
+    padding: 4px;
+}
+
+/* Расширенный список БД */
+.db-extended-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 12px;
+}
+
+.card-db-extended {
+    /* наследует от .card */
+}
+
+/* Подсписок архивов внутри карточки БД */
+.archive-sublist {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px dashed var(--border, #e0e0e0);
+}
+
+.archive-sublist-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted, #555);
+    margin-bottom: 6px;
+}
+
+.archive-sublist-items {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    /* Отступ между карточками архивов */
+
+    li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        /* Центрируем колонки по вертикали */
+        padding: 6px 10px;
+        border-radius: 4px;
+        font-size: 12px;
+        background: var(--metric-card-bg, #f9f9f9);
+        cursor: pointer;
+        transition: background 0.2s ease;
+
+        &:hover {
+            background: var(--border, #f0f0f0);
+        }
+    }
+}
+
+.archive-sublist-name {
+    color: var(--text-main, #333);
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 1.2;
+}
+
+.archive-sublist-meta {
+    color: var(--text-muted, #666);
+    font-size: 11px;
+}
+
+/* Левый блок: Название и бейдж */
+.archive-info-block {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    /* Расстояние между именем и статусом ДУСТУПЕН */
+}
+
+/* Правый блок: Метрики */
+.archive-meta-block {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    /* Прижимает текст к правому краю */
+    gap: 4px;
+    text-align: right;
+    font-size: 11px;
+    color: var(--text-muted, #666);
+}
+
+.archive-sublist--empty {
+    font-size: 12px;
+    color: var(--text-muted, #999);
+    font-style: italic;
+    margin-top: 8px;
+}
+
+.archive-size {
+    font-weight: 500;
+}
+
+.archive-usage {
+    margin-bottom: 10px;
+}

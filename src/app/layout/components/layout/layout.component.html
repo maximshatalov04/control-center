@@ -18,8 +18,14 @@
 
     <!-- Main Content -->
     <main class="main-content">
-        @if (selectedObject()) {
-        <app-properties-panel [selectedObject]="selectedObject()" />
+        @if (selectedObject() && selectedObject()?.type === 'server') {
+        <app-server-dashboard [serverId]="selectedObject()?.id" />
+        }
+        @else if (selectedObject() && selectedObject()?.type === 'database') {
+        <app-database-dashboard [databaseId]="selectedObject()?.id" />
+        }
+        @else if (selectedObject() && selectedObject()?.type === 'archive') {
+        <app-file-archive-dashboard [archiveId]="selectedObject()?.id" />
         } @else {
         <div class="empty-state">
             <p>Выберите объект в дереве для просмотра свойств</p>

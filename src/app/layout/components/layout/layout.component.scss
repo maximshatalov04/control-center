@@ -13,7 +13,7 @@
 .sidebar-header {
     grid-column: 1 / -1;
     /* Растягиваем на всю ширину */
-    background-color: var(--primary-bg);
+    background-color: var(--primary);
     color: #ffffff;
     display: flex;
     align-items: center;
@@ -65,11 +65,11 @@ div.sidebar-header {
 }
 
 .tab-item:hover {
-    background-color: var(--primary-bg-hover);
+    background-color: var(--primary-hover);
 }
 
 .tab-item.active {
-    background-color: var(--primary-bg-hover);
+    background-color: var(--primary-hover);
     font-weight: 600;
     box-shadow: inset 0 -2px 0 0 var(--panel-bg);
     /* Белая линия снизу активного таба */

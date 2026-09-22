@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { PropertiesPanelComponent } from './properties-panel.component';
+import { ServerDashboardComponent } from './server-dashboard.component';
 
-describe('PropertiesPanelComponent', () => {
-  let component: PropertiesPanelComponent;
-  let fixture: ComponentFixture<PropertiesPanelComponent>;
+describe('ServerDashboardComponent', () => {
+  let component: ServerDashboardComponent;
+  let fixture: ComponentFixture<ServerDashboardComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PropertiesPanelComponent]
+      imports: [ServerDashboardComponent]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(PropertiesPanelComponent);
+    fixture = TestBed.createComponent(ServerDashboardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

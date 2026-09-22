@@ -3,17 +3,19 @@
 @import url('https://googleapis.com');
 
 :root {
-  --primary-bg: #007D70;
+  --primary: #007D70;
   /* Фирменный бирюзовый цвет шапки */
-  --primary-bg-hover: #00665C;
+  --primary-hover: #00665C;
   /* Цвет табов при наведении */
+  --primary-border: #00887d;
+  /* Обводка */
   --accent: #1967d2;
   /* Фирменный бирюзовый цвет шапки */
   --window-bg: #F4F4F4;
   /* Светло-серый фон приложения */
   --panel-bg: #FFFFFF;
   /* Белый фон для панелей и карточек */
-  --panel-stroke: #e0e0e0;
+  --border: #e0e0e0;
   /* Обводка для панелей и карточек */
   --sidebar-border: #DCDCDC;
   /* Граница разделения блоков */
@@ -32,6 +34,19 @@
   --active-item-bg: #E5E5E5;
   /* Фон выбранного элемента в дереве */
   --font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  --badge-green-bg: #d4edda;
+  --badge-green: #155724;
+
+  --badge-yellow-bg: #fff3cd;
+  --badge-yellow: #856404;
+
+  --badge-red-bg: #f8d7da;
+  --badge-red: #721c24;
+
+  --metric-card-bg: #f9f9f9;
+
+  --progress-container-bg: #e0e0e0;
 }
 
 * {

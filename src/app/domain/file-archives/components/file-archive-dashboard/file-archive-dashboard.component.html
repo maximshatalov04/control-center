@@ -1,0 +1,174 @@
+<div class="file-archive-dashboard">
+    <!-- Верхняя панель: основная информация об архиве -->
+    <section class="panel">
+        <h3 class="panel-title">Основная информация</h3>
+        <div class="info-grid">
+            <div class="info-item">
+                <span class="info-label">Идентификатор</span>
+                <span class="info-value">{{ archive()?.id }}</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Наименование</span>
+                <span class="info-value">{{ archive()?.name }}</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">База данных</span>
+                @if (archive()?.databaseName) {
+                <a class="info-value info-link" (click)="navigateToDatabase(archive()!.databaseId!)">
+                    {{ archive()?.databaseName }}
+                </a>
+                } @else {
+                <span class="info-value">—</span>
+                }
+            </div>
+            <div class="info-item">
+                <span class="info-label">Сервер приложений</span>
+                @if (archive()?.serverName) {
+                <a class="info-value info-link" (click)="navigateToServer(archive()!.serverId!)">
+                    {{ archive()?.serverName }}
+                </a>
+                } @else {
+                <span class="info-value">—</span>
+                }
+            </div>
+            <div class="info-item">
+                <span class="info-label">Путь к хранилищу</span>
+                <span class="info-value archive-path-value" title="{{ archive()?.path }}">{{ archive()?.path }}</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Объём хранилища</span>
+                <span class="info-value">{{ formatSize(archive()?.maxCapacityBytes ?? 0) }}</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Занятый объём</span>
+                <span class="info-value">{{ formatSize(archive()?.usedBytes ?? 0) }}</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Количество файлов</span>
+                <span class="info-value">{{ archive()?.fileCount }}</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Статус</span>
+                @if (archive()?.status) {
+                <span class="badge-status badge-{{ getArchiveStatusColor(archive()!.status) }}">
+                    {{ archive()?.status }}
+                </span>
+                } @else {
+                <span class="badge-status badge-red">Неизвестно</span>
+                }
+            </div>
+            <div class="info-item">
+                <span class="info-label">Дата последнего изменения</span>
+                <span class="info-value">
+                    {{ archive()?.lastModifiedAt ? (archive()!.lastModifiedAt | date:'dd.MM.yyyy HH:mm') : 'Нет данных'
+                    }}
+                </span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Политика хранения</span>
+                <span class="info-value">{{ archive()?.retentionPolicy }}</span>
+            </div>
+            <div class="info-item info-item--full">
+                <span class="info-label">Описание</span>
+                <span class="info-value info-value--multiline">
+                    {{ archive()?.description || 'Не указано' }}
+                </span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Средняя панель: заполненность хранилища -->
+    <section class="panel">
+        <h3 class="panel-title">Заполненность хранилища</h3>
+        <div class="archive-usage-grid">
+            <div class="archive-usage-card">
+                <div class="archive-usage-header">
+                    <span class="archive-usage-title">Занято</span>
+                    <span class="archive-usage-percent">{{ getUsagePercent(archive()?.maxCapacityBytes ?? 0,
+                        archive()?.usedBytes ?? 0) }}%</span>
+                </div>
+                <div class="progress-container progress-container--lg">
+                    <div class="progress-bar"
+                        [style.width.%]="getUsagePercent(archive()?.maxCapacityBytes ?? 0, archive()?.usedBytes ?? 0)">
+                    </div>
+                </div>
+                <div class="archive-usage-detail">
+                    {{ formatSize(archive()?.usedBytes ?? 0) }} из {{ formatSize(archive()?.maxCapacityBytes ?? 0) }}
+                </div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-header">Свободно</div>
+                <span class="info-value info-value--lg">
+                    {{ formatSize((archive()?.maxCapacityBytes ?? 0) - (archive()?.usedBytes ?? 0)) }}
+                </span>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-header">Файлов</div>
+                <span class="info-value info-value--lg">{{ archive()?.fileCount ?? 0 }}</span>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-header">Средний размер</div>
+                <span class="info-value info-value--lg">
+                    {{ formatSize(getAverageFileSize()) }}
+                </span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Нижняя панель: другие архивы той же БД -->
+    <section class="panel">
+        <h3 class="panel-title">Другие архивы базы данных ({{ siblingArchives().length }})</h3>
+        @if (siblingArchives().length) {
+        <div class="archive-cards-grid">
+            @for (sib of siblingArchives(); track sib.id) {
+            <div class="card card-archive" [class.card-archive--active]="sib.id === archiveId()">
+                <div class="card-header">
+                    <span class="badge-status badge-{{ getArchiveStatusColor(sib.status) }}">
+                        {{ sib.status }}
+                    </span>
+                    <strong>{{ sib.name }}</strong>
+                </div>
+                <ul class="card-body-list">
+                    <li>
+                        <span class="label">Путь</span>
+                        <span class="archive-path" title="{{ sib.path }}">{{ sib.path }}</span>
+                    </li>
+                    <li>
+                        <span class="label">Объём</span>
+                        <span>{{ formatSize(sib.maxCapacityBytes) }}</span>
+                    </li>
+                    <li>
+                        <span class="label">Занято</span>
+                        <span>{{ formatSize(sib.usedBytes) }}</span>
+                    </li>
+                    <li>
+                        <span class="label">Файлов</span>
+                        <span>{{ sib.fileCount }}</span>
+                    </li>
+                </ul>
+
+                <div class="archive-usage">
+                    <span class="archive-usage-label">
+                        Заполнено: {{ usagePercent() }}%
+                    </span>
+                    <div class="progress-container">
+                        <div class="progress-bar" [style.width.%]="usagePercent()"></div>
+                    </div>
+                </div>
+
+                <div class="card-footer">
+                    <button class="btn btn-sm btn-outline" (click)="openArchiveDetails(sib)">
+                        Подробнее
+                    </button>
+                </div>
+            </div>
+            }
+        </div>
+        } @else {
+        <p class="empty-state">Других архивов в этой базе данных нет</p>
+        }
+    </section>
+</div>
