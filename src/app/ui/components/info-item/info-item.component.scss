@@ -1,0 +1,36 @@
+:host {
+    display: flex;
+    padding: 4px 0;
+    font-size: 14px;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border, #f0f0f0);
+}
+
+:host(:last-child) {
+    border-bottom: none;
+}
+
+:host(.info-item--full) {
+    grid-column: 1 / -1;
+}
+
+:host(.info-item--column) {
+    flex-direction: column;
+    border-bottom: none;
+}
+
+.info-label {
+    color: var(--text-muted, #666);
+    font-size: 12px;
+}
+
+.info-value {
+    color: var(--text-main, #333);
+    font-size: 14px;
+}
+
+.info-value--multiline {
+    white-space: pre-wrap;
+    line-height: 1.4;
+}
+

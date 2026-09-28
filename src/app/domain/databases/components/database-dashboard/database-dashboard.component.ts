@@ -9,9 +9,10 @@ import { PanelComponent } from '../../../../ui/components/panel/panel.component'
 import { ButtonComponent } from '../../../../ui/components/button/button.component';
 import { ProgressBarComponent } from '../../../../ui/components/progress-bar/progress-bar.component';
 import { CardComponent } from '../../../../ui/components/card/card.component';
+import { InfoItemComponent } from '../../../../ui/components/info-item/info-item.component';
 
 @Component({
-  imports: [DatePipe, PanelComponent, BadgeComponent, ButtonComponent, ProgressBarComponent, CardComponent],
+  imports: [DatePipe, PanelComponent, BadgeComponent, ButtonComponent, ProgressBarComponent, CardComponent, InfoItemComponent],
   selector: 'app-database-dashboard',
   styleUrl: './database-dashboard.component.scss',
   templateUrl: './database-dashboard.component.html',

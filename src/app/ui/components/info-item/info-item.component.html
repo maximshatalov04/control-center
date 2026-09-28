@@ -1,0 +1,9 @@
+<span class="info-label">{{ label() }}</span>
+@if(isCustom()){
+<ng-content select="[info-custom]"></ng-content>
+}
+@else {
+<span class="info-value" [class.info-value--multiline]="isFull()">
+    <ng-content></ng-content>
+</span>
+}

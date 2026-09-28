@@ -2,38 +2,15 @@
     <!-- Верхняя панель: основная информация -->
     <app-panel title="Основная информация">
         <div class="info-grid">
-            <div class="info-item">
-                <span class="info-label">ID</span>
-                <span class="info-value">{{ server()?.id }}</span>
-            </div>
-            <div class="info-item">
-                <span class="info-label">Наименование</span>
-                <span class="info-value">{{ server()?.name }}</span>
-            </div>
-            <div class="info-item">
-                <span class="info-label">IP-адрес</span>
-                <span class="info-value">{{ server()?.ipAddress }}</span>
-            </div>
-            <div class="info-item">
-                <span class="info-label">Порт</span>
-                <span class="info-value">{{ server()?.port }}</span>
-            </div>
-            <div class="info-item">
-                <span class="info-label">Версия ПО</span>
-                <span class="info-value">{{ server()?.softwareVersion }}</span>
-            </div>
-            <div class="info-item">
-                <span class="info-label">ОС</span>
-                <span class="info-value">{{ server()?.os }}</span>
-            </div>
-            <div class="info-item">
-                <span class="info-label">Дата последнего запуска</span>
-                <span class="info-value">{{ server()?.lastStartAt | date:'dd.MM.yyyy HH:mm' }}</span>
-            </div>
-            <div class="info-item info-item--full">
-                <span class="info-label">Описание</span>
-                <span class="info-value info-value--multiline">{{ server()?.description || 'Не указано' }}</span>
-            </div>
+            <app-info-item label="ID">{{ server()?.id }}</app-info-item>
+            <app-info-item label="Наименование">{{ server()?.name }}</app-info-item>
+            <app-info-item label="IP-адрес">{{ server()?.ipAddress }}</app-info-item>
+            <app-info-item label="Порт">{{ server()?.port }}</app-info-item>
+            <app-info-item label="Версия ПО">{{ server()?.softwareVersion }}</app-info-item>
+            <app-info-item label="ОС">{{ server()?.os }}</app-info-item>
+            <app-info-item label="Дата последнего запуска">{{ server()?.lastStartAt | date:'dd.MM.yyyy HH:mm'
+                }}</app-info-item>
+            <app-info-item label="Описание" [isFull]="true">{{ server()?.description || 'Не указано' }}</app-info-item>
         </div>
     </app-panel>
 
@@ -44,11 +21,11 @@
             @for (db of server()?.databases; track db.id) {
             <app-card [headerTitle]="db.name" [headerBadge]="db.status"
                 [headerBadgeColor]="getDatabaseStatusColor(db.status)">
-                <ul class="card-body-list">
-                    <li><span class="label">Тип СУБД</span><span>{{ db.dbType }}</span></li>
-                    <li><span class="label">Версия</span><span>{{ db.version }}</span></li>
-                    <li><span class="label">Размер БД</span><span>{{ formatSize(db.sizeBytes) }}</span></li>
-                </ul>
+                <div class="card-body-list">
+                    <app-info-item label="Тип СУБД" direction="row">{{ db.dbType }}</app-info-item>
+                    <app-info-item label="Версия" direction="row">{{ db.version }}</app-info-item>
+                    <app-info-item label="Размер БД" direction="row">{{ formatSize(db.sizeBytes) }}</app-info-item>
+                </div>
                 <div class="card-footer">
                     <app-button label="Подробнее" (click)="openDbDetails(db)"></app-button>
                 </div>

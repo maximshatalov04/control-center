@@ -2,16 +2,16 @@
     <!-- Верхняя панель: основная информация о БД -->
     <app-panel title="Основная информация">
         <div class="info-grid">
-            <div class="info-item">
-                <span class="info-label">Идентификатор</span>
-                <span class="info-value">{{ database()?.id }}</span>
-            </div>
-            <div class="info-item">
-                <span class="info-label">Наименование</span>
-                <span class="info-value">{{ database()?.name }}</span>
-            </div>
-            <div class="info-item">
-                <span class="info-label">Сервер приложений</span>
+            <app-info-item label="Идентификатор">{{ database()?.id }}</app-info-item>
+            <app-info-item label="Наименование">{{ database()?.name }}</app-info-item>
+            <app-info-item label="Статус">
+                @if (database()?.status) {
+                <app-badge [text]="database()!.status" [color]="getDatabaseStatusColor(database()!.status)"></app-badge>
+                } @else {
+                <app-badge text="Неизвестно" color="red"></app-badge>
+                }
+            </app-info-item>
+            <app-info-item label="Сервер приложений" info-custom>
                 @if (database()?.serverName) {
                 <a class="info-value info-link" (click)="navigateToServer(database()!.serverId!)">
                     {{ database()?.serverName }}
@@ -19,50 +19,21 @@
                 } @else {
                 <span class="info-value">—</span>
                 }
-            </div>
-            <div class="info-item">
-                <span class="info-label">Тип СУБД</span>
-                <span class="info-value">{{ database()?.dbType }}</span>
-            </div>
-            <div class="info-item">
-                <span class="info-label">Версия СУБД</span>
-                <span class="info-value">{{ database()?.version }}</span>
-            </div>
-            <div class="info-item">
-                <span class="info-label">Кодировка</span>
-                <span class="info-value">{{ database()?.encoding }}</span>
-            </div>
-            <div class="info-item">
-                <span class="info-label">Размер БД</span>
-                <span class="info-value">{{ formatSize(database()?.sizeBytes ?? 0) }}</span>
-            </div>
-            <div class="info-item">
-                <span class="info-label">Размер журнала транзакций</span>
-                <span class="info-value">{{ formatSize(database()?.logSizeBytes ?? 0) }}</span>
-            </div>
-            <div class="info-item">
-                <span class="info-label">Статус</span>
-                @if (database()?.status) {
-                <app-badge [text]="database()!.status" [color]="getDatabaseStatusColor(database()!.status)"></app-badge>
-                } @else {
-                <app-badge text="Неизвестно" color="red"></app-badge>
-                }
-            </div>
-            <div class="info-item">
-                <span class="info-label">Дата последнего бэкапа</span>
-                <span class="info-value">
-                    {{ database()?.lastBackupAt ? (database()!.lastBackupAt | date:'dd.MM.yyyy HH:mm') : 'Нет данных' }}
-                </span>
-            </div>
-            <div class="info-item">
-                <span class="info-label">Количество файловых архивов</span>
-                <span class="info-value">{{ database()?.archives?.length || 0 }}</span>
-            </div>
-            <div class="info-item info-item--full">
-                <span class="info-label">Описание</span>
-                <span class="info-value info-value--multiline">{{ database()?.description || 'Не указано' }}</span>
-            </div>
+            </app-info-item>
+            <app-info-item label="Тип СУБД">{{ database()?.dbType }}</app-info-item>
+            <app-info-item label="Версия СУБД">{{ database()?.version }}</app-info-item>
+            <app-info-item label="Кодировка">{{ database()?.encoding }}</app-info-item>
+            <app-info-item label="Размер БД">{{ formatSize(database()?.sizeBytes ?? 0) }}</app-info-item>
+            <app-info-item label="Размер журнала транзакций">{{ formatSize(database()?.logSizeBytes ?? 0)
+                }}</app-info-item>
+            <app-info-item label="Дата последнего бэкапа">
+                {{ database()?.lastBackupAt ? (database()!.lastBackupAt | date:'dd.MM.yyyy HH:mm') : 'Нет данных' }}
+            </app-info-item>
+            <app-info-item label="Количество файловых архивов">{{ database()?.archives?.length || 0 }}</app-info-item>
+            <app-info-item label="Описание" [isFull]="true">{{ database()?.description || 'Не указано'
+                }}</app-info-item>
         </div>
+
     </app-panel>
 
     <!-- Средняя панель: список файловых архивов (мини-карточки) -->
@@ -72,21 +43,22 @@
             @for (archive of database()?.archives; track archive.id) {
             <app-card [headerTitle]="archive.name" [headerBadge]="archive.status"
                 [headerBadgeColor]="getArchiveStatusColor(archive.status)">
-                <ul class="card-body-list">
-                    <li><span class="label">Идентификатор</span><span>{{ archive.id }}</span></li>
-                    <li><span class="label">База данных</span><span>{{ database()?.name }}</span></li>
-                    <li><span class="label">Путь к хранилищу</span><span class="archive-path"
-                            title="{{ archive.path }}">{{ archive.path }}</span></li>
-                    <li><span class="label">Объём хранилища</span><span>{{ formatSize(archive.maxCapacityBytes)
-                            }}</span></li>
-                    <li><span class="label">Занятый объём</span><span>{{ formatSize(archive.usedBytes) }}</span></li>
-                    <li><span class="label">Количество файлов</span><span>{{ archive.fileCount }}</span></li>
-                    <li><span class="label">Дата последнего изменения</span>
-                        <span>{{ archive.lastModifiedAt ? (archive.lastModifiedAt | date:'dd.MM.yyyy HH:mm') : 'Нет
-                            данных' }}</span>
-                    </li>
-                    <li><span class="label">Политика хранения</span><span>{{ archive.retentionPolicy }}</span></li>
-                </ul>
+                <div class="card-body-list">
+                    <app-info-item label="Идентификатор" direction="row">{{ archive.id }}</app-info-item>
+                    <app-info-item label="База данных" direction="row">{{ database()?.name }}</app-info-item>
+                    <app-info-item label="Путь к хранилищу" direction="row" [isCustom]="true"><span info-custom
+                            class="archive-path" title="{{ archive.path }}">{{ archive.path }}</span></app-info-item>
+                    <app-info-item label="Объём хранилища" direction="row">{{ formatSize(archive.maxCapacityBytes)
+                        }}</app-info-item>
+                    <app-info-item label="Занятый объём" direction="row">{{ formatSize(archive.usedBytes)
+                        }}</app-info-item>
+                    <app-info-item label="Количество файлов" direction="row">{{ archive.fileCount }}</app-info-item>
+                    <app-info-item label="Дата последнего изменения" direction="row">
+                        {{ archive.lastModifiedAt ? (archive.lastModifiedAt | date:'dd.MM.yyyy HH:mm') : 'Нет данных' }}
+                    </app-info-item>
+                    <app-info-item label="Политика хранения" direction="row">{{ archive.retentionPolicy
+                        }}</app-info-item>
+                </div>
 
                 @let percent = getUsagePercent(archive.maxCapacityBytes, archive.usedBytes);
                 <div class="archive-usage">
@@ -94,10 +66,7 @@
                     <app-progress-bar [percent]="percent"></app-progress-bar>
                 </div>
 
-                <div class="info-item">
-                    <span class="info-label">Описание архива</span>
-                    <span class="info-value">{{ archive.description || 'Без описания' }}</span>
-                </div>
+                <app-info-item label="Описание архива">{{ archive.description || 'Без описания' }}</app-info-item>
 
                 <div class="card-footer card-footer--margin-top">
                     <app-button label="Подробнее" (click)="openArchiveDetails(archive)"></app-button>
@@ -118,14 +87,15 @@
             <app-card [headerTitle]="db.name" [headerBadge]="db.status"
                 [headerBadgeColor]="getDatabaseStatusColor(db.status)">
                 <ul class="card-body-list">
-                    <li><span class="label">Тип СУБД</span><span>{{ db.dbType }}</span></li>
-                    <li><span class="label">Версия</span><span>{{ db.version }}</span></li>
-                    <li><span class="label">Размер БД</span><span>{{ formatSize(db.sizeBytes) }}</span></li>
-                    <li><span class="label">Журнал транзакций</span><span>{{ formatSize(db.logSizeBytes) }}</span></li>
-                    <li><span class="label">Архивов</span><span>{{ db.archives?.length || 0 }}</span></li>
-                    <li><span class="label">Дата бэкапа</span>
-                        <span>{{ db.lastBackupAt ? (db.lastBackupAt | date:'dd.MM.yyyy HH:mm') : 'Нет данных' }}</span>
-                    </li>
+                    <app-info-item label="Тип СУБД" direction="row">{{ db.dbType }}</app-info-item>
+                    <app-info-item label="Версия" direction="row">{{ db.version }}</app-info-item>
+                    <app-info-item label="Размер БД" direction="row">{{ formatSize(db.sizeBytes) }}</app-info-item>
+                    <app-info-item label="Журнал транзакций" direction="row">{{ formatSize(db.logSizeBytes)
+                        }}</app-info-item>
+                    <app-info-item label="Архивов" direction="row">{{ db.archives?.length || 0 }}</app-info-item>
+                    <app-info-item label="Дата бэкапа" direction="row">
+                        {{ db.lastBackupAt ? (db.lastBackupAt | date:'dd.MM.yyyy HH:mm') : 'Нет данных' }}
+                    </app-info-item>
                 </ul>
 
                 @if (db.archives && db.archives.length) {

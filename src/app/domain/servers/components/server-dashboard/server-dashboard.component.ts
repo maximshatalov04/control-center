@@ -9,9 +9,10 @@ import { CardComponent } from '../../../../ui/components/card/card.component';
 import { ButtonComponent } from '../../../../ui/components/button/button.component';
 import { BadgeComponent } from '../../../../ui/components/badge/badge.component';
 import { ProgressBarComponent } from '../../../../ui/components/progress-bar/progress-bar.component';
+import { InfoItemComponent } from '../../../../ui/components/info-item/info-item.component';
 
 @Component({
-  imports: [DatePipe, PanelComponent, CardComponent, ButtonComponent, BadgeComponent, ProgressBarComponent],
+  imports: [DatePipe, PanelComponent, CardComponent, ButtonComponent, BadgeComponent, ProgressBarComponent, InfoItemComponent ],
   selector: 'app-server-dashboard',
   styleUrl: './server-dashboard.component.scss',
   templateUrl: './server-dashboard.component.html',

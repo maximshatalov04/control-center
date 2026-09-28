@@ -12,7 +12,12 @@
     margin-bottom: 8px;
 }
 
-.info-value--lg {
+.metric-value {
+    color: var(--text-main, #333);
+    font-size: 14px;
+}
+
+.metric-value--lg {
     font-size: 18px;
     font-weight: 600;
     color: var(--text-main, #222);

@@ -79,32 +79,13 @@ body {
 .info-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 12px;
-}
+  gap: 8px;
 
-.info-item {
-  display: flex;
-  flex-direction: column;
-}
-
-.info-item--full {
-  grid-column: 1 / -1;
-}
-
-.info-label {
-  font-size: 12px;
-  color: var(--text-muted, #666);
-  margin-bottom: 4px;
-}
-
-.info-value {
-  font-size: 14px;
-  color: var(--text-main, #333);
-}
-
-.info-value--multiline {
-  white-space: pre-wrap;
-  line-height: 1.4;
+  .info-link {
+    color: var(--primary, #00887d);
+    cursor: pointer;
+    text-decoration: underline;
+  }
 }
 
 .empty-state {

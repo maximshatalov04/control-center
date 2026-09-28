@@ -10,9 +10,10 @@ import { ProgressBarComponent } from '../../../../ui/components/progress-bar/pro
 import { MetricCardComponent } from '../../../../ui/components/metric-card/metric-card.component';
 import { ButtonComponent } from '../../../../ui/components/button/button.component';
 import { CardComponent } from '../../../../ui/components/card/card.component';
+import { InfoItemComponent } from '../../../../ui/components/info-item/info-item.component';
 
 @Component({
-  imports: [DatePipe, PanelComponent, BadgeComponent, ProgressBarComponent, MetricCardComponent, ButtonComponent, CardComponent],
+  imports: [DatePipe, PanelComponent, BadgeComponent, ProgressBarComponent, MetricCardComponent, ButtonComponent, CardComponent, InfoItemComponent],
   selector: 'app-file-archive-dashboard',
   styleUrl: './file-archive-dashboard.component.scss',
   templateUrl: './file-archive-dashboard.component.html',
