@@ -1,7 +1,6 @@
-<div class="server-dashboard">
+<div class="dashboard server-dashboard">
     <!-- Верхняя панель: основная информация -->
-    <section class="panel">
-        <h3 class="panel-title">Основная информация</h3>
+    <app-panel title="Основная информация">
         <div class="info-grid">
             <div class="info-item">
                 <span class="info-label">ID</span>
@@ -31,48 +30,35 @@
                 <span class="info-label">Дата последнего запуска</span>
                 <span class="info-value">{{ server()?.lastStartAt | date:'dd.MM.yyyy HH:mm' }}</span>
             </div>
-            <div class="info-item">
+            <div class="info-item info-item--full">
                 <span class="info-label">Описание</span>
                 <span class="info-value info-value--multiline">{{ server()?.description || 'Не указано' }}</span>
             </div>
         </div>
-    </section>
+    </app-panel>
 
     <!-- Средняя панель: список БД (мини-карточки) -->
-    <section class="panel">
-        <h3 class="panel-title">Базы данных ({{ server()?.databases?.length || 0 }})</h3>
+    <app-panel [title]="'Базы данных (' + (server()?.databases?.length || 0) + ')'">
         @if (server()?.databases && server()?.databases?.length) {
         <div class="db-cards-grid">
             @for (db of server()?.databases; track db.id) {
-            <div class="card card-db">
-                <div class="card-header">
-                    <span class="badge-status badge-{{ getDatabaseStatusColor(db.status) }}">{{ db.status }}</span>
-                    <strong>{{ db.name }}</strong>
-                </div>
+            <app-card [headerTitle]="db.name" [headerBadge]="db.status"
+                [headerBadgeColor]="getDatabaseStatusColor(db.status)">
                 <ul class="card-body-list">
-                    <li>
-                        <span class="label">Тип СУБД</span>
-                        <span>{{ db.dbType }}</span>
-                    </li>
-                    <li>
-                        <span class="label">Версия</span>
-                        <span>{{ db.version }}</span>
-                    </li>
-                    <li>
-                        <span class="label">Размер БД</span>
-                        <span>{{ formatSize(db.sizeBytes) }}</span>
-                    </li>
+                    <li><span class="label">Тип СУБД</span><span>{{ db.dbType }}</span></li>
+                    <li><span class="label">Версия</span><span>{{ db.version }}</span></li>
+                    <li><span class="label">Размер БД</span><span>{{ formatSize(db.sizeBytes) }}</span></li>
                 </ul>
                 <div class="card-footer">
-                    <button class="btn btn-sm btn-outline" (click)="openDbDetails(db)">Подробнее</button>
+                    <app-button label="Подробнее" (click)="openDbDetails(db)"></app-button>
                 </div>
-            </div>
+            </app-card>
             }
         </div>
         } @else {
         <p class="empty-state">Нет привязанных баз данных</p>
         }
-    </section>
+    </app-panel>
 
     <!-- Нижняя панель: динамическая информация (статус и ресурсы) -->
     <section class="panel">
@@ -82,45 +68,31 @@
             <div class="metric-card">
                 <div class="metric-header">Статус</div>
                 @if (server()?.status) {
-                <div class="status-badge status-{{ getServerStatusColor(server()?.status) }}">
-                    {{ server()?.status }}
-                </div>
+                <app-badge [text]="server()!.status" [color]="getServerStatusColor(server()!.status)"></app-badge>
                 } @else {
-                <div class="status-badge status-red">Неизвестно</div>
+                <app-badge text="Неизвестно" color="red"></app-badge>
                 }
             </div>
 
             <!-- CPU -->
             <div class="metric-card">
                 <div class="metric-header">CPU</div>
-                <div class="progress-container">
-                    <div class="progress-bar" [style.width.%]="server()?.cpuUsagePercent ?? 0"></div>
-                    <div class="progress-label">
-                        {{ (server()?.cpuUsagePercent ?? 0) }}%
-                    </div>
-                </div>
+                <app-progress-bar class="metric-progress-bar"
+                    [percent]="server()?.cpuUsagePercent ?? 0"></app-progress-bar>
             </div>
 
             <!-- Память -->
             <div class="metric-card">
                 <div class="metric-header">Память</div>
-                <div class="progress-container">
-                    <div class="progress-bar" [style.width.%]="server()?.memoryUsagePercent ?? 0"></div>
-                    <div class="progress-label">
-                        {{ (server()?.memoryUsagePercent ?? 0) }}%
-                    </div>
-                </div>
+                <app-progress-bar class="metric-progress-bar"
+                    [percent]="server()?.memoryUsagePercent ?? 0"></app-progress-bar>
             </div>
 
             <!-- Диск -->
             <div class="metric-card">
                 <div class="metric-header">Диск</div>
-                <div class="progress-container">
-                    <div class="progress-bar" [style.width.%]="server()?.diskUsagePercent ?? 0"></div>
-                    <div class="progress-label">
-                        {{ (server()?.diskUsagePercent ?? 0) }}%
-                    </div>
-                </div>
+                <app-progress-bar class="metric-progress-bar"
+                    [percent]="server()?.diskUsagePercent ?? 0"></app-progress-bar>
             </div>
         </div>
     </section>

@@ -1,0 +1,12 @@
+@if (headerTitle()) {
+<div class="card-header">
+    @if (headerBadge()) {
+    <app-badge [text]="headerBadge()!" [color]="headerBadgeColor() ?? ''"></app-badge>
+    }
+    <strong>{{ headerTitle() }}</strong>
+</div>
+}
+
+<ng-content></ng-content>
+
+<ng-content select="[card-footer]"></ng-content>

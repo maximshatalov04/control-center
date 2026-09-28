@@ -1,0 +1,28 @@
+:host {
+    display: inline-flex;
+}
+
+.btn {
+    padding: 6px 12px;
+    border: 1px solid var(--border, #ccc);
+    background: transparent;
+    color: var(--text-main, #333);
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.btn-sm {
+    padding: 4px 10px;
+    font-size: 12px;
+}
+
+.btn-outline {
+    border-color: var(--primary, #00887d);
+    color: var(--primary, #00887d);
+}
+
+.btn-outline:hover {
+    background: var(--primary, #00887d);
+    color: var(--panel-bg, #fff);
+}

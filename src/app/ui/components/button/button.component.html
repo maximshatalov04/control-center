@@ -1,0 +1,2 @@
+<button class="btn" [class.btn-sm]="size() === 'sm'" [class.btn-outline]="type()==='outline'" (click)="click.emit()"
+    type="button">{{ label() }}</button>

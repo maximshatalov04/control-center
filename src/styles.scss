@@ -66,3 +66,80 @@ body {
   height: 100vh;
   overflow: hidden;
 }
+
+
+/* ===== Dashboard layout ===== */
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* info-grid — общий для всех панелей с инфой */
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 12px;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.info-item--full {
+  grid-column: 1 / -1;
+}
+
+.info-label {
+  font-size: 12px;
+  color: var(--text-muted, #666);
+  margin-bottom: 4px;
+}
+
+.info-value {
+  font-size: 14px;
+  color: var(--text-main, #333);
+}
+
+.info-value--multiline {
+  white-space: pre-wrap;
+  line-height: 1.4;
+}
+
+.empty-state {
+  color: var(--text-muted, #999);
+  text-align: center;
+  padding: 24px;
+}
+
+.card-body-list {
+  list-style: none;
+  padding: 0;
+  margin: 8px 0 12px 0;
+}
+
+.card-body-list li {
+  display: flex;
+  justify-content: space-between;
+  padding: 4px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.card-body-list li:last-child {
+  border-bottom: none;
+}
+
+.card-body-list .label {
+  color: var(--text-muted, #666);
+  font-size: 12px;
+}
+
+.card-footer {
+  margin-top: auto;
+  text-align: right;
+}
+
+.card-footer--margin-top {
+  margin-top: 12px;
+}

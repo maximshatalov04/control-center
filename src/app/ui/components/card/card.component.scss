@@ -1,0 +1,20 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--border, #e0e0e0);
+    border-radius: 6px;
+    padding: 12px;
+    background: var(--panel-bg, #fff);
+}
+
+:host([active]) {
+    border-color: var(--primary, #00887d);
+    box-shadow: 0 0 0 2px rgba(0, 136, 125, 0.15);
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}

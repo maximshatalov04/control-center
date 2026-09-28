@@ -4,9 +4,14 @@ import { MOCK_SERVERS } from '../../../../shared/data/servers';
 import { getArchiveStatusColor, getDatabaseStatusColor } from '../../../../shared/utils/status-utils';
 import { formatSize, getUsagePercent } from '../../../../shared/utils/file-utils';
 import { DatePipe } from '@angular/common';
+import { BadgeComponent } from '../../../../ui/components/badge/badge.component';
+import { PanelComponent } from '../../../../ui/components/panel/panel.component';
+import { ButtonComponent } from '../../../../ui/components/button/button.component';
+import { ProgressBarComponent } from '../../../../ui/components/progress-bar/progress-bar.component';
+import { CardComponent } from '../../../../ui/components/card/card.component';
 
 @Component({
-  imports: [DatePipe],
+  imports: [DatePipe, PanelComponent, BadgeComponent, ButtonComponent, ProgressBarComponent, CardComponent],
   selector: 'app-database-dashboard',
   styleUrl: './database-dashboard.component.scss',
   templateUrl: './database-dashboard.component.html',

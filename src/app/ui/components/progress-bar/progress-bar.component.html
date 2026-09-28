@@ -1,0 +1,6 @@
+<div class="progress-bar-container" [class.progress-bar-container--lg]="isLarge()">
+    <div class="progress-bar" [style.width.%]="percent()"></div>
+    <div class="progress-label">
+        {{ (percent()) }}%
+    </div>
+</div>

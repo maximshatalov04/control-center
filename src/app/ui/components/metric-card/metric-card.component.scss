@@ -1,0 +1,19 @@
+:host {
+    position: relative;
+    background: var(--metric-card-bg, #f9f9f9);
+    padding: 12px;
+    border-radius: 6px;
+    text-align: center;
+}
+
+.metric-header {
+    font-size: 13px;
+    color: var(--text-muted, #666);
+    margin-bottom: 8px;
+}
+
+.info-value--lg {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-main, #222);
+}

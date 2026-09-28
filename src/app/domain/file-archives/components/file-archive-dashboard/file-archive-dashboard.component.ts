@@ -4,9 +4,15 @@ import { MOCK_SERVERS } from '../../../../shared/data/servers';
 import { formatSize, getUsagePercent } from '../../../../shared/utils/file-utils';
 import { getArchiveStatusColor } from '../../../../shared/utils/status-utils';
 import { FileArchiveInfo } from '../../models/file-archive-info';
+import { BadgeComponent } from '../../../../ui/components/badge/badge.component';
+import { PanelComponent } from '../../../../ui/components/panel/panel.component';
+import { ProgressBarComponent } from '../../../../ui/components/progress-bar/progress-bar.component';
+import { MetricCardComponent } from '../../../../ui/components/metric-card/metric-card.component';
+import { ButtonComponent } from '../../../../ui/components/button/button.component';
+import { CardComponent } from '../../../../ui/components/card/card.component';
 
 @Component({
-  imports: [DatePipe],
+  imports: [DatePipe, PanelComponent, BadgeComponent, ProgressBarComponent, MetricCardComponent, ButtonComponent, CardComponent],
   selector: 'app-file-archive-dashboard',
   styleUrl: './file-archive-dashboard.component.scss',
   templateUrl: './file-archive-dashboard.component.html',
@@ -61,6 +67,12 @@ export class FileArchiveDashboardComponent {
     }
     return [];
   });
+
+  archiveUsagePercent(archive: FileArchiveInfo) {
+    if (!archive)
+      return 0;
+    return getUsagePercent(archive?.maxCapacityBytes, archive?.usedBytes);
+  }
 
   getAverageFileSize(): number {
     const a = this.archive();
