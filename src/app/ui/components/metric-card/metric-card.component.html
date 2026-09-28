@@ -1,2 +1,11 @@
-<div class="metric-header">{{ header() }}</div>
-<span class="metric-value" [class.metric-value--lg]="isLarge()">{{ value() }}</span>
+<div class="metric-wrapper">
+    <div class="metric-header">{{ header() }}</div>
+    @if (content() != null) {
+    <span class="metric-value" [class.metric-value--lg]="isLarge()">
+        {{ content() }}
+    </span>
+    } @else {
+    <!-- Если content не передан, рендерим проецируемый контент (например, progress-bar) -->
+    <ng-content></ng-content>
+    }
+</div>

@@ -7,6 +7,6 @@ import { Component, input } from '@angular/core';
 })
 export class MetricCardComponent {
   readonly header = input.required<string>();
-  readonly value = input.required<string | number>();
+  readonly content = input<string | number | null>(null);
   readonly isLarge = input<boolean>(false);
 }

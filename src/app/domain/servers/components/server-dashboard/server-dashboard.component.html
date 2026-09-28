@@ -37,40 +37,34 @@
         }
     </app-panel>
 
-    <!-- Нижняя панель: динамическая информация (статус и ресурсы) -->
-    <section class="panel">
-        <h3 class="panel-title">Динамические показатели</h3>
+    <app-panel title="Динамические показатели">
         <div class="metrics-grid">
-            <!-- Статус сервера -->
-            <div class="metric-card">
-                <div class="metric-header">Статус</div>
+            <!-- Статус сервера (просто текст) -->
+            <app-metric-card [header]="'Статус'" [isLarge]="false">
                 @if (server()?.status) {
                 <app-badge [text]="server()!.status" [color]="getServerStatusColor(server()!.status)"></app-badge>
                 } @else {
                 <app-badge text="Неизвестно" color="red"></app-badge>
                 }
-            </div>
+            </app-metric-card>
 
-            <!-- CPU -->
-            <div class="metric-card">
-                <div class="metric-header">CPU</div>
-                <app-progress-bar class="metric-progress-bar"
-                    [percent]="server()?.cpuUsagePercent ?? 0"></app-progress-bar>
-            </div>
+            <!-- CPU (прогресс-бар) -->
+            <app-metric-card [header]="'CPU'">
+                <app-progress-bar class="metric-progress-bar" [percent]="server()?.cpuUsagePercent ?? 0">
+                </app-progress-bar>
+            </app-metric-card>
 
             <!-- Память -->
-            <div class="metric-card">
-                <div class="metric-header">Память</div>
-                <app-progress-bar class="metric-progress-bar"
-                    [percent]="server()?.memoryUsagePercent ?? 0"></app-progress-bar>
-            </div>
+            <app-metric-card [header]="'Память'">
+                <app-progress-bar class="metric-progress-bar" [percent]="server()?.memoryUsagePercent ?? 0">
+                </app-progress-bar>
+            </app-metric-card>
 
             <!-- Диск -->
-            <div class="metric-card">
-                <div class="metric-header">Диск</div>
-                <app-progress-bar class="metric-progress-bar"
-                    [percent]="server()?.diskUsagePercent ?? 0"></app-progress-bar>
-            </div>
+            <app-metric-card [header]="'Диск'">
+                <app-progress-bar class="metric-progress-bar" [percent]="server()?.diskUsagePercent ?? 0">
+                </app-progress-bar>
+            </app-metric-card>
         </div>
-    </section>
+    </app-panel>
 </div>

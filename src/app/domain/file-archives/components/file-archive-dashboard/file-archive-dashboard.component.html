@@ -57,10 +57,10 @@
             </div>
 
             <app-metric-card header="Свободно"
-                [value]="formatSize((archive()?.maxCapacityBytes ?? 0) - (archive()?.usedBytes ?? 0))"
+                [content]="formatSize((archive()?.maxCapacityBytes ?? 0) - (archive()?.usedBytes ?? 0))"
                 [isLarge]="true"></app-metric-card>
-            <app-metric-card header="Файлов" [value]="archive()?.fileCount ?? 0" [isLarge]="true"></app-metric-card>
-            <app-metric-card header="Средний размер" [value]="formatSize(getAverageFileSize())"
+            <app-metric-card header="Файлов" [content]="archive()?.fileCount ?? 0" [isLarge]="true"></app-metric-card>
+            <app-metric-card header="Средний размер" [content]="formatSize(getAverageFileSize())"
                 [isLarge]="true"></app-metric-card>
         </div>
     </app-panel>
