@@ -1,5 +1,4 @@
 import { ServerStatus } from "../../../shared/models/server-status";
-import { DatabaseInfo } from "../../databases/models/database-info";
 
 export interface ServerInfo {
     id: string;
@@ -8,11 +7,19 @@ export interface ServerInfo {
     port: number;
     softwareVersion: string;
     os: string;
-    lastStartAt: Date | string;
-    description?: string;
+    description: string;
+    databaseIds: string[];
+}
+
+export interface ServerMetrics {
+    serverId: string;
     status: ServerStatus;
+    lastStartAt: string | null;
     cpuUsagePercent: number;
     memoryUsagePercent: number;
     diskUsagePercent: number;
-    databases?: DatabaseInfo[];
+}
+
+export interface ServerWithMetrics extends ServerInfo {
+    metrics?: Omit<ServerMetrics, 'serverId'>
 }

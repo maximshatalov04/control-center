@@ -1,3 +1,11 @@
+Для запуска проекта в dev-режиме необходимо выполнить команду:
+
+``` bash
+npm run dev
+```
+Важно: Сервер написан на .NET 9, соответственно dotnet должен быть установлен на компьютере.
+
+
 [![Angular Logo](https://www.vectorlogo.zone/logos/angular/angular-icon.svg)](https://angular.io/) [![Electron Logo](https://www.vectorlogo.zone/logos/electronjs/electronjs-icon.svg)](https://electronjs.org/)
 
 ![Maintained][maintained-badge]
@@ -75,7 +83,7 @@ You can disable "Developer Tools" by commenting `win.webContents.openDevTools();
 ## Project structure
 
 | Folder | Description                                      |
-|--------|--------------------------------------------------|
+| ------ | ------------------------------------------------ |
 | app    | Electron main process folder (NodeJS)            |
 | src    | Electron renderer process folder (Web / Angular) |
 
@@ -104,7 +112,7 @@ Maybe you only want to execute the application in the browser with hot reload? J
 ## Included Commands
 
 | Command                  | Description                                                                                           |
-|--------------------------|-------------------------------------------------------------------------------------------------------|
+| ------------------------ | ----------------------------------------------------------------------------------------------------- |
 | `npm run ng:serve`       | Execute the app in the web browser (DEV mode)                                                         |
 | `npm run web:build`      | Build the app that can be used directly in the web browser. Your built files are in the /dist folder. |
 | `npm run electron:local` | Builds your application and start electron locally                                                    |
@@ -141,9 +149,9 @@ Then use your library by importing it in `app/main.ts` file. Quite simple, isn't
 
 E2E Test scripts can be found in `e2e` folder.
 
-| Command       | Description               |
-|---------------|---------------------------|
-| `npm run e2e` | Execute end to end tests  |
+| Command       | Description              |
+| ------------- | ------------------------ |
+| `npm run e2e` | Execute end to end tests |
 
 Note: To make it work behind a proxy, you can add this proxy exception in your terminal  
 `export {no_proxy,NO_PROXY}="127.0.0.1,localhost"`

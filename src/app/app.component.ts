@@ -1,7 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { ElectronService } from './core/services';
 import { APP_CONFIG } from '../environments/environment';
-import { LayoutComponent } from './layout/components/layout/layout.component';
 import { RouterOutlet } from '@angular/router';
 
 @Component({

@@ -1,17 +1,25 @@
 import { DatabaseStatus } from "../../../shared/models/database-status";
-import { FileArchiveInfo } from "../../file-archives/models/file-archive-info";
 
 export interface DatabaseInfo {
     id: string;
+    serverId: string;
     name: string;
     dbType: string;
     version: string;
     connectionString: string;
     encoding: string;
+    description: string;
+    archiveIds: string[];
+}
+
+export interface DatabaseMetrics {
+    databaseId: string;
+    status: DatabaseStatus;
     sizeBytes: number;
     logSizeBytes: number;
-    status: DatabaseStatus;
-    lastBackupAt: Date | string | null;
-    description?: string;
-    archives?: FileArchiveInfo[];
+    lastBackupAt: string | null;
+}
+
+export interface DatabaseWithMetrics extends DatabaseInfo {
+    metrics?: Omit<DatabaseMetrics, 'databaseId'>
 }

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, input, Output } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 
 @Component({
   selector: 'app-button',
@@ -7,7 +7,7 @@ import { Component, EventEmitter, input, Output } from '@angular/core';
   standalone: true,
 })
 export class ButtonComponent {
-  @Output() click = new EventEmitter<void>();
+  readonly btnClick = output<void>();
 
   readonly label = input.required<string>();
   readonly type = input<'outline' | 'primary'>('outline');

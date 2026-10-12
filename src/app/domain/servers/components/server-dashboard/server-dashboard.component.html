@@ -8,32 +8,33 @@
             <app-info-item label="Порт">{{ server()?.port }}</app-info-item>
             <app-info-item label="Версия ПО">{{ server()?.softwareVersion }}</app-info-item>
             <app-info-item label="ОС">{{ server()?.os }}</app-info-item>
-            <app-info-item label="Дата последнего запуска">{{ server()?.lastStartAt | date:'dd.MM.yyyy HH:mm'
+            <app-info-item label="Дата последнего запуска">{{ server()?.metrics?.lastStartAt | date:'dd.MM.yyyy HH:mm'
                 }}</app-info-item>
             <app-info-item label="Описание" [isFull]="true">{{ server()?.description || 'Не указано' }}</app-info-item>
         </div>
     </app-panel>
 
     <!-- Средняя панель: список БД (мини-карточки) -->
-    <app-panel [title]="'Базы данных (' + (server()?.databases?.length || 0) + ')'">
-        @if (server()?.databases && server()?.databases?.length) {
+    <app-panel [title]="'Базы данных (' + (databases().length || 0) + ')'">
+        @if (databases() && databases().length) {
         <div class="db-cards-grid">
-            @for (db of server()?.databases; track db.id) {
-            <app-card [headerTitle]="db.name" [headerBadge]="db.status"
-                [headerBadgeColor]="getDatabaseStatusColor(db.status)">
+            @for (database of databases(); track database.id) {
+            <app-card [headerTitle]="database.name" [headerBadge]="database.metrics?.status"
+                [headerBadgeColor]="getDatabaseStatusColor(database.metrics?.status)">
                 <div class="card-body-list">
-                    <app-info-item label="Тип СУБД" direction="row">{{ db.dbType }}</app-info-item>
-                    <app-info-item label="Версия" direction="row">{{ db.version }}</app-info-item>
-                    <app-info-item label="Размер БД" direction="row">{{ formatSize(db.sizeBytes) }}</app-info-item>
+                    <app-info-item label="Тип СУБД" direction="row">{{ database.dbType }}</app-info-item>
+                    <app-info-item label="Версия" direction="row">{{ database.version }}</app-info-item>
+                    <app-info-item label="Размер БД" direction="row">{{
+                        formatSize(database?.metrics?.sizeBytes ?? 0) }}</app-info-item>
                 </div>
                 <div class="card-footer">
-                    <app-button label="Подробнее" (click)="openDbDetails(db)"></app-button>
+                    <app-button label="Подробнее" (click)="openDbDetails(database)"></app-button>
                 </div>
             </app-card>
             }
         </div>
         } @else {
-        <p class="empty-state">Нет привязанных баз данных</p>
+        <app-empty-state message="Нет привязанных баз данных" />
         }
     </app-panel>
 
@@ -41,8 +42,8 @@
         <div class="metrics-grid">
             <!-- Статус сервера (просто текст) -->
             <app-metric-card [header]="'Статус'" [isLarge]="false">
-                @if (server()?.status) {
-                <app-badge [text]="server()!.status" [color]="getServerStatusColor(server()!.status)"></app-badge>
+                @if (metrics()?.status) {
+                <app-badge [text]="metrics()!.status" [color]="getServerStatusColor(metrics()!.status)"></app-badge>
                 } @else {
                 <app-badge text="Неизвестно" color="red"></app-badge>
                 }
@@ -50,19 +51,19 @@
 
             <!-- CPU (прогресс-бар) -->
             <app-metric-card [header]="'CPU'">
-                <app-progress-bar class="metric-progress-bar" [percent]="server()?.cpuUsagePercent ?? 0">
+                <app-progress-bar class="metric-progress-bar" [percent]="metrics()?.cpuUsagePercent ?? 0">
                 </app-progress-bar>
             </app-metric-card>
 
             <!-- Память -->
             <app-metric-card [header]="'Память'">
-                <app-progress-bar class="metric-progress-bar" [percent]="server()?.memoryUsagePercent ?? 0">
+                <app-progress-bar class="metric-progress-bar" [percent]="metrics()?.memoryUsagePercent ?? 0">
                 </app-progress-bar>
             </app-metric-card>
 
             <!-- Диск -->
             <app-metric-card [header]="'Диск'">
-                <app-progress-bar class="metric-progress-bar" [percent]="server()?.diskUsagePercent ?? 0">
+                <app-progress-bar class="metric-progress-bar" [percent]="metrics()?.diskUsagePercent ?? 0">
                 </app-progress-bar>
             </app-metric-card>
         </div>

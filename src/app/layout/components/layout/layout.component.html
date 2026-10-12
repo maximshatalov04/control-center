@@ -6,7 +6,8 @@
         </div>
         <nav class="main-nav">
             <ul class="top-tabs">
-                <li class="tab-item active">Информация</li>
+                <li class="tab-item" routerLink="/info" routerLinkActive="active">Информация</li>
+                <li class="tab-item" routerLink="/files" routerLinkActive="active">Файлы</li>
             </ul>
         </nav>
     </header>
@@ -18,18 +19,7 @@
 
     <!-- Main Content -->
     <main class="main-content">
-        @if (selectedObject() && selectedObject()?.type === 'server') {
-        <app-server-dashboard [serverId]="selectedObject()?.id" />
-        }
-        @else if (selectedObject() && selectedObject()?.type === 'database') {
-        <app-database-dashboard [databaseId]="selectedObject()?.id" />
-        }
-        @else if (selectedObject() && selectedObject()?.type === 'archive') {
-        <app-file-archive-dashboard [archiveId]="selectedObject()?.id" />
-        } @else {
-        <div class="empty-state">
-            <p>Выберите объект в дереве для просмотра свойств</p>
-        </div>
-        }
+        <router-outlet></router-outlet>
+        <app-toast-component />
     </main>
 </div>

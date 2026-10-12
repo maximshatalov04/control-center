@@ -1,8 +1,8 @@
 import { enableProdMode, provideZoneChangeDetection } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClient, withInterceptors, withInterceptorsFromDi } from '@angular/common/http';
 import { importProvidersFrom } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { provideRouter, withComponentInputBinding } from '@angular/router';
 
 import { AppComponent } from './app/app.component';
 import { APP_CONFIG } from './environments/environment';
@@ -10,9 +10,8 @@ import { CoreModule } from './app/core/core.module';
 import { SharedModule } from './app/shared/shared.module';
 import { provideTranslateService } from '@ngx-translate/core';
 import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
-import { PageNotFoundComponent } from './app/shared/components';
-import { DetailComponent } from './app/detail/detail.component';
-import { LayoutComponent } from './app/layout/components/layout/layout.component';
+import { HttpErrorInterceptor } from './app/shared/interceptors/http-error-interceptor';
+import { appRoutes } from './app/app.routes';
 
 if (APP_CONFIG.production) {
   enableProdMode();
@@ -29,25 +28,11 @@ bootstrapApplication(AppComponent, {
       fallbackLang: 'en',
       lang: 'en'
     }),
-    provideRouter([
-      {
-        path: '',
-        redirectTo: 'home',
-        pathMatch: 'full'
-      },
-      {
-        path: 'home',
-        component: LayoutComponent
-      },
-      {
-        path: 'detail',
-        component: DetailComponent
-      },
-      {
-        path: '**',
-        component: PageNotFoundComponent
-      }
-    ]),
+    provideHttpClient(withInterceptors([HttpErrorInterceptor])),
+    provideRouter(
+      appRoutes,
+      withComponentInputBinding(),
+    ),
     importProvidersFrom(
       CoreModule,
       SharedModule

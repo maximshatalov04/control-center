@@ -1,6 +1,8 @@
-import { Component, computed, output, signal } from '@angular/core';
-import { Entity } from '../../../../shared/models/entity';
+import { Component, output, signal } from '@angular/core';
 import { Server } from '../../../../shared/models/server';
+import { TreeSelection, treeSelection } from '../../interfaces/tree-selection';
+import { Database } from '../../../../shared/models/database';
+import { FileArchive } from '../../../../shared/models/file-archive';
 
 @Component({
   imports: [],
@@ -9,7 +11,7 @@ import { Server } from '../../../../shared/models/server';
   templateUrl: './tree-view.component.html',
 })
 export class TreeViewComponent {
-  readonly selectedObject = output<Entity | undefined>();
+  readonly selectedObject = output<TreeSelection>();
   readonly selectedId = signal<string>("");
 
   readonly serversExpanded = signal<boolean>(true);
@@ -162,8 +164,21 @@ export class TreeViewComponent {
     return this.expandedStates()['arch-' + dbId] ?? false;
   }
 
-  selectObject(entity: Entity) {
-    this.selectedId.set(entity.id);
-    this.selectedObject?.emit(entity);
+  // Сервер — родительских ID нет
+  onServerSelection(server: Server) {
+    this.selectedId.set(server.id);
+    this.selectedObject.emit(treeSelection(server));
+  }
+
+  // База данных — родитель это server.id
+  onDatabaseSelection(server: Server, db: Database) {
+    this.selectedId.set(db.id);
+    this.selectedObject.emit(treeSelection(db, [server.id]));
+  }
+
+  // Архив — родитель это server.id и db.id
+  onArchiveSelection(server: Server, db: Database, archive: FileArchive) {
+    this.selectedId.set(archive.id);
+    this.selectedObject.emit(treeSelection(archive, [server.id, db.id]));
   }
 }

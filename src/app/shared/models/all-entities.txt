@@ -1,0 +1,23 @@
+export type DatabaseStatus = 'Онлайн' | 'Офлайн' | 'Восстановление' | 'Ошибка';import { Entity } from "./entity";
+import { FileArchive } from "./file-archive";
+
+export interface Database extends Entity<'database'> {
+    archives: FileArchive[];
+}export type EntityType = 'server' | 'database' | 'archive';import { EntityType } from "./entity-type";
+
+export interface Entity<T extends EntityType = EntityType> {
+    id: string;
+    name: string;
+    type: T; // Теперь тип выводится автоматически из параметра дженерика
+}export type FileArchiveStatus = 'Доступен' | 'Только чтение' | 'Недоступен';
+import { Entity } from "./entity";
+
+export interface FileArchive extends Entity<'archive'> {
+    // Чистый интерфейс, поле type унаследовано как 'archive'
+}export type ServerStatus = 'Запущен' | 'Остановлен' | 'Недоступен';
+import { Database } from "./database";
+import { Entity } from "./entity";
+
+export interface Server extends Entity<'server'> {
+    databases: Database[];
+}

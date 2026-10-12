@@ -1,6 +1,6 @@
 <div class="tree-container">
     <ul class="tree-root">
-        <!-- Уровень 1: Серверные отчёты -->
+        <!-- Уровень 1: Серверы приложений -->
         <li class="tree-node expanded">
             <div class="node-content" [class.active]="false">
                 @let hasServers = servers().length > 0;
@@ -26,7 +26,7 @@
             <ul class="tree-children">
                 @for (server of servers() ; track server.id){
                 <!-- Уровень 2: Базы данных -->
-                <li class="tree-node" (click)="selectObject(server); $event.stopPropagation()">
+                <li class="tree-node" (click)="onServerSelection(server); $event.stopPropagation()">
                     <div class="node-content" [class.active]="selectedId() === server.id">
                         @let hasDatabases = server.databases.length > 0;
                         @if (hasDatabases) {
@@ -49,8 +49,8 @@
                     @if(getDbExpanded(server.id)){
                     <ul class="tree-children">
                         @for (db of server.databases ; track db.id){
-                        <!-- Уровень 3: Архивы (в исходном коде они были раскрываемыми) -->
-                        <li class="tree-node" (click)="selectObject(db); $event.stopPropagation()">
+                        <!-- Уровень 3: Архивы -->
+                        <li class="tree-node" (click)="onDatabaseSelection(server, db); $event.stopPropagation()">
                             <div class="node-content" [class.active]="selectedId() === db.id">
                                 @let hasArchives = db.archives.length > 0;
                                 @if (hasArchives) {
@@ -74,8 +74,8 @@
                             @if(getArchExpanded(db.id)){
                             <ul class="tree-children">
                                 @for (archive of db.archives ; track archive.id){
-                                <!-- Конечные файлы/скрипты -->
-                                <li class="tree-node" (click)="selectObject(archive); $event.stopPropagation()">
+                                <li class="tree-node"
+                                    (click)="onArchiveSelection(server, db, archive); $event.stopPropagation()">
                                     <div class="node-content target-file" [class.active]="selectedId() === archive.id">
                                         <span class="node-icon file">
                                             <!-- File icon -->

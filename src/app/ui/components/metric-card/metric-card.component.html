@@ -1,6 +1,6 @@
 <div class="metric-wrapper">
     <div class="metric-header">{{ header() }}</div>
-    @if (content() != null) {
+    @if (content() !== null) {
     <span class="metric-value" [class.metric-value--lg]="isLarge()">
         {{ content() }}
     </span>

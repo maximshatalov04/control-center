@@ -1,6 +1,4 @@
-import { ServerInfo } from "../../domain/servers/models/server-info";
-
-export const MOCK_SERVERS: ServerInfo[] = [
+export const MOCK_SERVERS: any[] = [
     {
         id: 'srv-001',
         name: 'Сервер приложений PROD-01',

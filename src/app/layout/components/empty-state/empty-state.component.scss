@@ -1,0 +1,17 @@
+/* Состояние, когда объект не выбран */
+:host {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    color: var(--text-muted);
+    border: 2px dashed var(--sidebar-border);
+    border-radius: 6px;
+    background-color: var(--panel-bg);
+    margin: 4px;
+}
+
+:host p {
+    font-size: 14px;
+}
