@@ -5,9 +5,10 @@ import { Database } from '../../../../shared/models/database';
 import { FileArchive } from '../../../../shared/models/file-archive';
 import { ServersTreeStateService } from '../../api/servers-tree-state';
 import { take } from 'rxjs';
+import { Spinner } from '../../../../ui/components/spinner/spinner';
 
 @Component({
-  imports: [],
+  imports: [Spinner],
   selector: 'app-tree-view',
   styleUrl: './tree-view.component.scss',
   templateUrl: './tree-view.component.html',
@@ -20,6 +21,7 @@ export class TreeViewComponent implements OnInit {
   readonly serversExpanded = signal<boolean>(true);
   readonly expandedStates = signal<Record<string, boolean>>({});
   readonly servers = computed(() => this.#state.servers());
+  readonly loading = computed(() => this.#state.loading());
 
   toggleNode(key: string) {
     this.expandedStates.update(states => ({

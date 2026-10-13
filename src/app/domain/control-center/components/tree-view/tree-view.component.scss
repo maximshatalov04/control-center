@@ -1,4 +1,6 @@
 :host {
+    position: relative;
+    min-height: 200px;
     display: block;
     width: 100%;
     color: var(--text-main);
@@ -6,7 +8,6 @@
 }
 
 .tree-container {
-    padding: 8px;
     background-color: var(--panel-bg);
 }
 

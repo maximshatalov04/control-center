@@ -124,3 +124,15 @@ body {
 .card-footer--margin-top {
   margin-top: 12px;
 }
+
+.overlay-spinner {
+  position: absolute;
+  inset: 0;
+  /* покрывает весь контейнер */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.85);
+  /* полупрозрачный фон, чтобы список был виден сквозь спиннер */
+  z-index: 10;
+}

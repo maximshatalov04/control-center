@@ -34,6 +34,11 @@
             <app-info-item label="Описание" [isFull]="true">{{ database()?.description || 'Не указано'
                 }}</app-info-item>
         </div>
+        @if (databasesLoading()) {
+        <div class="overlay-spinner">
+            <app-spinner />
+        </div>
+        }
     </app-panel>
 
     <!-- Средняя панель: список файловых архивов (мини-карточки) -->
@@ -78,6 +83,11 @@
         </div>
         } @else {
         <app-empty-state message="Нет привязанных файловых архивов" />
+        }
+        @if (archivesLoading()) {
+        <div class="overlay-spinner">
+            <app-spinner />
+        </div>
         }
     </app-panel>
 
@@ -131,6 +141,11 @@
         </div>
         } @else {
         <app-empty-state message="Нет баз данных" />
+        }
+        @if (databasesLoading()) {
+        <div class="overlay-spinner">
+            <app-spinner />
+        </div>
         }
     </app-panel>
 </div>

@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, input, signal } from '@angular/core';
+import { Component, computed, DestroyRef, inject, input, signal } from '@angular/core';
 import { FileArchiveInfo, FileArchiveWithMetrics } from '../../../file-archives/models/file-archive-info';
 import { getArchiveStatusColor, getDatabaseStatusColor } from '../../../../shared/utils/status-utils';
 import { formatSize, getUsagePercent } from '../../../../shared/utils/file-utils';
@@ -18,9 +18,10 @@ import { ServerWithMetrics } from '../../../servers/models/server-info';
 import { DatabaseWithMetrics } from '../../models/database-info';
 import { FileArchivesStateService } from '../../../file-archives/api/file-archives-state';
 import { EmptyStateComponent } from '../../../../layout/components/empty-state/empty-state.component';
+import { Spinner } from '../../../../ui/components/spinner/spinner';
 
 @Component({
-  imports: [DatePipe, PanelComponent, BadgeComponent, ButtonComponent, ProgressBarComponent, CardComponent, InfoItemComponent, EmptyStateComponent],
+  imports: [DatePipe, PanelComponent, BadgeComponent, ButtonComponent, ProgressBarComponent, CardComponent, InfoItemComponent, EmptyStateComponent, Spinner],
   selector: 'app-database-dashboard',
   styleUrl: './database-dashboard.component.scss',
   templateUrl: './database-dashboard.component.html',
@@ -35,6 +36,10 @@ export class DatabaseDashboardComponent {
   // Значения из маршрута
   readonly serverId = input.required<string>();
   readonly databaseId = input.required<string>();
+
+  // Прелоадеры
+  readonly databasesLoading = computed(() => this.#databases.loading());
+  readonly archivesLoading = computed(() => this.#archives.loading());
 
   readonly showConnectionString = signal(false);
 

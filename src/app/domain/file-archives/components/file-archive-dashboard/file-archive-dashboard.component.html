@@ -42,6 +42,11 @@
             <app-info-item label="Политика хранения">{{ archive()?.retentionPolicy }}</app-info-item>
             <app-info-item label="Описание" [isFull]="true">{{ archive()?.description || 'Не указано' }}</app-info-item>
         </div>
+        @if (archivesLoading()) {
+        <div class="overlay-spinner">
+            <app-spinner />
+        </div>
+        }
     </app-panel>
 
     <!-- Средняя панель: заполненность хранилища -->
@@ -65,6 +70,11 @@
             <app-metric-card header="Средний размер" [content]="formatSize(getAverageFileSize())"
                 [isLarge]="true"></app-metric-card>
         </div>
+        @if (archivesLoading()) {
+        <div class="overlay-spinner">
+            <app-spinner />
+        </div>
+        }
     </app-panel>
 
     <!-- Нижняя панель: другие архивы той же БД -->
@@ -99,6 +109,11 @@
         </div>
         } @else {
         <app-empty-state message="Других архивов в этой базе данных нет" />
+        }
+        @if (archivesLoading()) {
+        <div class="overlay-spinner">
+            <app-spinner />
+        </div>
         }
     </app-panel>
 </div>

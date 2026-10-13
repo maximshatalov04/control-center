@@ -31,7 +31,7 @@ export const HttpErrorInterceptor: HttpInterceptorFn = (
   );
 
   if (!APP_CONFIG.production) {
-    return pipe.pipe(delay(Math.random() * 500))
+    return pipe.pipe(delay(Math.random() * 700))
   }
   else {
     return pipe;

@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, input, OnInit } from '@angular/core';
+import { Component, computed, DestroyRef, inject, input, OnInit } from '@angular/core';
 import { DatabaseInfo, DatabaseWithMetrics } from '../../../databases/models/database-info';
 import { DatePipe } from '@angular/common';
 import { getDatabaseStatusColor, getServerStatusColor } from '../../../../shared/utils/status-utils';
@@ -17,9 +17,10 @@ import { Router } from '@angular/router';
 import { DatabasesStateService } from '../../../databases/api/databases-state';
 import { ServerWithMetrics } from '../../models/server-info';
 import { EmptyStateComponent } from '../../../../layout/components/empty-state/empty-state.component';
+import { Spinner } from '../../../../ui/components/spinner/spinner';
 
 @Component({
-  imports: [DatePipe, PanelComponent, CardComponent, ButtonComponent, BadgeComponent, ProgressBarComponent, InfoItemComponent, MetricCardComponent, EmptyStateComponent],
+  imports: [DatePipe, PanelComponent, CardComponent, ButtonComponent, BadgeComponent, ProgressBarComponent, InfoItemComponent, MetricCardComponent, EmptyStateComponent, Spinner],
   selector: 'app-server-dashboard',
   styleUrl: './server-dashboard.component.scss',
   templateUrl: './server-dashboard.component.html',
@@ -32,6 +33,10 @@ export class ServerDashboardComponent implements OnInit {
   readonly #destroyRef = inject(DestroyRef);
   // Значение из маршрута
   readonly serverId = input.required<string>();
+
+  // Прелоадеры
+  readonly serversLoading = computed(() => this.#servers.loading());
+  readonly databasesLoading = computed(() => this.#databases.loading());
 
   readonly server = toSignal(
     toObservable(this.serverId).pipe(

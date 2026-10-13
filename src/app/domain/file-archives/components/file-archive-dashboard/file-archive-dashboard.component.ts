@@ -17,9 +17,10 @@ import { FileArchivesStateService } from '../../api/file-archives-state';
 import { toSignal, toObservable, takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { catchError, combineLatestWith, EMPTY, filter, Observable, switchMap, timer, of } from 'rxjs';
 import { EmptyStateComponent } from '../../../../layout/components/empty-state/empty-state.component';
+import { Spinner } from '../../../../ui/components/spinner/spinner';
 
 @Component({
-  imports: [DatePipe, PanelComponent, BadgeComponent, ProgressBarComponent, MetricCardComponent, ButtonComponent, CardComponent, InfoItemComponent, EmptyStateComponent],
+  imports: [DatePipe, PanelComponent, BadgeComponent, ProgressBarComponent, MetricCardComponent, ButtonComponent, CardComponent, InfoItemComponent, EmptyStateComponent, Spinner],
   selector: 'app-file-archive-dashboard',
   styleUrl: './file-archive-dashboard.component.scss',
   templateUrl: './file-archive-dashboard.component.html',
@@ -35,6 +36,9 @@ export class FileArchiveDashboardComponent {
   readonly serverId = input.required<string>();
   readonly databaseId = input.required<string>();
   readonly archiveId = input.required<string>();
+
+  // Прелоадеры
+  readonly archivesLoading = computed(() => this.#archives.loading());
 
   public readonly getArchiveStatusColor = getArchiveStatusColor;
   public readonly formatSize = formatSize;

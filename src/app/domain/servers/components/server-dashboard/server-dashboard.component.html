@@ -12,6 +12,11 @@
                 }}</app-info-item>
             <app-info-item label="Описание" [isFull]="true">{{ server()?.description || 'Не указано' }}</app-info-item>
         </div>
+        @if (serversLoading()) {
+        <div class="overlay-spinner">
+            <app-spinner />
+        </div>
+        }
     </app-panel>
 
     <!-- Средняя панель: список БД (мини-карточки) -->
@@ -35,6 +40,11 @@
         </div>
         } @else {
         <app-empty-state message="Нет привязанных баз данных" />
+        }
+        @if (databasesLoading()) {
+        <div class="overlay-spinner">
+            <app-spinner />
+        </div>
         }
     </app-panel>
 
@@ -67,5 +77,10 @@
                 </app-progress-bar>
             </app-metric-card>
         </div>
+        @if (serversLoading()) {
+        <div class="overlay-spinner">
+            <app-spinner />
+        </div>
+        }
     </app-panel>
 </div>

@@ -101,3 +101,9 @@
         </li>
     </ul>
 </div>
+
+@if (loading()) {
+<div class="overlay-spinner">
+    <app-spinner />
+</div>
+}
