@@ -50,6 +50,36 @@ export class ElectronService {
     }
   }
 
+  /**
+ * Показать диалог выбора файла для сохранения и вернуть путь (или null, если отмена)
+  */
+  async showSaveDialog(defaultPath?: string): Promise<string | null> {
+    if (!this.isElectron || !this.ipcRenderer) {
+      return null;
+    }
+    try {
+      const result = await this.ipcRenderer.invoke('show-save-dialog', {
+        defaultPath,
+        filters: [{ name: 'JSON', extensions: ['json'] }],
+      });
+      // result.canceled === true → пользователь нажал «Отмена»
+      return result.canceled ? null : result.filePath;
+    } catch (e) {
+      console.error('Ошибка при открытии диалога сохранения:', e);
+      return null;
+    }
+  }
+  
+  /**
+   * Отправить данные на сохранение в главный процесс
+   */
+  async writeFile(filePath: string, content: string): Promise<void> {
+    if (!this.isElectron || !this.ipcRenderer) {
+      throw new Error('Не в среде Electron');
+    }
+    await this.ipcRenderer.invoke('write-file', filePath, content);
+  }
+
   get isElectron(): boolean {
     return !!(window && window.process && window.process.type);
   }

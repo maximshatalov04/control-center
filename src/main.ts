@@ -12,6 +12,8 @@ import { provideTranslateService } from '@ngx-translate/core';
 import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpErrorInterceptor } from './app/shared/interceptors/http-error-interceptor';
 import { appRoutes } from './app/app.routes';
+import { ipcMain, dialog } from 'electron';
+import fs from 'fs';
 
 if (APP_CONFIG.production) {
   enableProdMode();

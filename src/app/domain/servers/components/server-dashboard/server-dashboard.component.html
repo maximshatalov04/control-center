@@ -11,6 +11,9 @@
             <app-info-item label="Дата последнего запуска">{{ server()?.metrics?.lastStartAt | date:'dd.MM.yyyy HH:mm'
                 }}</app-info-item>
             <app-info-item label="Описание" [isFull]="true">{{ server()?.description || 'Не указано' }}</app-info-item>
+            <div class="card-footer card-footer-left">
+                <app-button label="Сохранить конфигурацию" (click)="saveServerConfig()"></app-button>
+            </div>
         </div>
         @if (serversLoading()) {
         <div class="overlay-spinner">

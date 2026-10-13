@@ -18,6 +18,7 @@ import { DatabasesStateService } from '../../../databases/api/databases-state';
 import { ServerWithMetrics } from '../../models/server-info';
 import { EmptyStateComponent } from '../../../../layout/components/empty-state/empty-state.component';
 import { Spinner } from '../../../../ui/components/spinner/spinner';
+import { ElectronService } from '../../../../core/services/electron/electron.service';
 
 @Component({
   imports: [DatePipe, PanelComponent, CardComponent, ButtonComponent, BadgeComponent, ProgressBarComponent, InfoItemComponent, MetricCardComponent, EmptyStateComponent, Spinner],
@@ -31,6 +32,8 @@ export class ServerDashboardComponent implements OnInit {
   readonly #databases = inject(DatabasesStateService);
   readonly #router = inject(Router);
   readonly #destroyRef = inject(DestroyRef);
+  readonly #electronService = inject(ElectronService);
+
   // Значение из маршрута
   readonly serverId = input.required<string>();
 
@@ -94,4 +97,65 @@ export class ServerDashboardComponent implements OnInit {
     this.#databases.loadAll().pipe(take(1))
       .subscribe();
   };
+
+  async saveServerConfig(): Promise<void> {
+    const server = this.server();
+    if (!server) {
+      console.warn('Сервер не загружен, нельзя сохранить конфигурацию');
+      return;
+    }
+
+    // Формируем объект конфигурации (можно расширить по необходимости)
+    const config = {
+      id: server.id,
+      name: server.name,
+      ipAddress: server.ipAddress,
+      port: server.port,
+      softwareVersion: server.softwareVersion,
+      os: server.os,
+      description: server.description,
+      databaseIds: server.databaseIds,
+      metrics: this.metrics()
+    };
+
+    const jsonString = JSON.stringify(config, null, 2);
+    const fileName = `server-config-${server.id}.json`;
+
+    if (this.#electronService.isElectron) {
+      await this.saveToDiskElectron(jsonString, fileName);
+    } else {
+      this.downloadFileWeb(jsonString, fileName);
+    }
+  }
+
+  private downloadFileWeb(content: string, filename: string): void {
+    const blob = new Blob([content], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
+  private async saveToDiskElectron(content: string, defaultName: string): Promise<void> {
+    // 1. Показать диалог выбора пути
+    const filePath = await this.#electronService.showSaveDialog(defaultName);
+
+    if (!filePath) {
+      // Пользователь отменил
+      return;
+    }
+
+    // 2. Отправить данные на запись в главный процесс
+    try {
+      await this.#electronService.writeFile(filePath, content);
+      alert(`Конфигурация сервера успешно сохранена:\n${filePath}`);
+    } catch (err) {
+      console.error('Ошибка сохранения файла:', err);
+      alert('Не удалось сохранить файл. Проверьте права доступа и путь.');
+    }
+  }
 }

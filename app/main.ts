@@ -1,4 +1,4 @@
-import {app, BrowserWindow, ipcMain, screen} from 'electron';
+import { app, BrowserWindow, ipcMain, screen, dialog } from 'electron';
 import * as path from 'path';
 import * as fs from 'fs';
 
@@ -26,7 +26,7 @@ function createWindow(): BrowserWindow {
 
   if (serve) {
     import('electron-debug').then(debug => {
-      debug.default({isEnabled: true, showDevTools: true});
+      debug.default({ isEnabled: true, showDevTools: true });
     });
 
     import('electron-reloader').then(reloader => {
@@ -41,7 +41,7 @@ function createWindow(): BrowserWindow {
     let pathIndex = './browser/index.html';
 
     if (fs.existsSync(path.join(__dirname, '../dist/browser/index.html'))) {
-       // Path when running electron in local folder
+      // Path when running electron in local folder
       pathIndex = '../dist/browser/index.html';
     }
 
@@ -63,6 +63,28 @@ function createWindow(): BrowserWindow {
 
 try {
   ipcMain.handle('app:get-version', () => app.getVersion());
+
+  // Показать диалог сохранения
+  ipcMain.handle('show-save-dialog', async (event, options) => {
+    const result = await dialog.showSaveDialog(options);
+    return {
+      canceled: result.canceled,
+      filePath: result.filePath || null,
+    };
+  });
+
+  // Записать файл
+  ipcMain.handle('write-file', async (event, filePath, content) => {
+    return new Promise<void>((resolve, reject) => {
+      fs.writeFile(filePath, content, 'utf8', (err) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve();
+        }
+      });
+    });
+  });
 
   // This method will be called when Electron has finished
   // initialization and is ready to create browser windows.
