@@ -1,9 +1,16 @@
-Для запуска проекта в dev-режиме необходимо выполнить команду:
+Для запуска проекта в dev-режиме необходимо выполнить команду (запускается сервер и web-приложение):
 
 ``` bash
 npm run dev
 ```
 Важно: Сервер написан на .NET 9, соответственно dotnet должен быть установлен на компьютере.
+
+Для запуска десктопного приложения в dev-режиме необходимо выполнить команду (запускается только приложение, сервер должен быть запущен):
+
+``` bash
+npm run electron:local
+```
+
 
 
 [![Angular Logo](https://www.vectorlogo.zone/logos/angular/angular-icon.svg)](https://angular.io/) [![Electron Logo](https://www.vectorlogo.zone/logos/electronjs/electronjs-icon.svg)](https://electronjs.org/)
